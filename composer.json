@@ -1,0 +1,45 @@
+{
+    "name": "oxygen/marketplace",
+    "description": "A Marketplace for Oxygen",
+    "license": "MIT",
+    "keywords": [
+        "cms",
+        "framework",
+        "OxygenExtension"
+    ],
+    "authors": [
+        {
+            "name": "Chris Chamberlain",
+            "email": "c.chamberlain@iinet.net.au"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "oxygen/core": "dev-master",
+        "illuminate/support": "4.2.*"
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*",
+        "michelf/php-markdown": "~1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Oxygen\\Marketplace\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "title": "Oxygen Marketplace",
+        "readme": "oxygen.md",
+        "changes": "changes.md",
+        "icon": "icon.png",
+        "providers": [
+            {
+                "name": "Marketplace",
+                "class": "Oxygen\\Marketplace\\MarketplaceServiceProvider",
+                "description": "Adds the Marketplace"
+            }
+        ]
+    }
+}
