@@ -16,13 +16,22 @@ use Validator;
 use View;
 use Response;
 
-use Packagist\Api\Client;
+use Oxygen\Core\Blueprint\Manager as BlueprintManager;
 use Oxygen\Core\Controller\BlueprintController;
 use Oxygen\Core\Http\Notification;
 use Oxygen\Marketplace\Loader\LoadingException;
 
-
 class MarketplaceController extends BlueprintController {
+
+    /**
+     * Constructs the PagesController.
+     *
+     * @param BlueprintManager        $manager
+     */
+
+    public function __construct(BlueprintManager $manager) {
+        parent::__construct($manager, 'Marketplace');
+    }
 
     /**
      * Home page of the marketplace.
@@ -34,7 +43,10 @@ class MarketplaceController extends BlueprintController {
         try {
             $results = Marketplace::search($this->getFilters(Input::all()));
         } catch(LoadingException $e) {
-            return View::make('oxygen/marketplace::error', ['exception' => $e]);
+            return View::make('oxygen/marketplace::error', [
+                'exception' => $e,
+                'title' => Lang::get('oxygen/marketplace::ui.error.title')
+            ]);
         }
 
         if(!empty($results['results'])) {
@@ -43,7 +55,11 @@ class MarketplaceController extends BlueprintController {
             $paginator = null;
         }
 
-        return View::make('oxygen/marketplace::home', ['results' => $results, 'paginator' => $paginator]);
+        return View::make('oxygen/marketplace::home', [
+            'results' => $results,
+            'paginator' => $paginator,
+            'title' => Lang::get('oxygen/marketplace::ui.home.title')
+        ]);
     }
 
     /**
@@ -93,10 +109,15 @@ class MarketplaceController extends BlueprintController {
         try {
             $package = Marketplace::get($name);
         } catch(LoadingException $e) {
-            return View::make('oxygen/marketplace::error', ['exception' => $e]);
+            return View::make('oxygen/marketplace::error', [
+                'exception' => $e
+            ]);
         }
 
-        return View::make('oxygen/marketplace::view', ['package' => $package]);
+        return View::make('oxygen/marketplace::view', [
+            'package' => $package,
+            'title' => Lang::get('oxygen/marketplace::ui.views.title', ['name' => $package->getPrettyName()])
+        ]);
     }
 
     /**
@@ -156,7 +177,9 @@ class MarketplaceController extends BlueprintController {
      */
 
     public function getInstallProgress() {
-        return View::make('oxygen/marketplace::installProgress');
+        return View::make('oxygen/marketplace::installProgress', [
+            'title' => Lang::get('oxygen/marketplace::ui.installProgress.title')
+        ]);
     }
 
     /**
@@ -200,7 +223,8 @@ class MarketplaceController extends BlueprintController {
         $paginator = empty($chunk) ? [] : Paginator::make($chunk, count($installed), 30);
         return View::make('oxygen/marketplace::installed', [
             'installed' => $chunk,
-            'paginator' => $paginator
+            'paginator' => $paginator,
+            'title' => Lang::get('oxygen/marketplace::ui.installed.title')
         ]);
     }
 
