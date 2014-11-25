@@ -44,7 +44,7 @@ class MarketplaceServiceProvider extends ServiceProvider {
 	public function addNavigationItems() {
 		$blueprint = $this->app['oxygen.blueprintManager']->get('Marketplace');
 
-		$this->app['oxygen.navigation']->add($blueprint->getToolbarItem('getHome'), Navigation::SECONDARY);
+		$this->app['oxygen.navigation']->add($blueprint->getToolbarItem('getHome'));
 	}
 
 	/**
