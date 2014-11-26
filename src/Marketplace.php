@@ -76,6 +76,7 @@ class Marketplace {
         $data = $this->loader->getPackageDetails($name)['package'];
         $package = new Package($this->loader, $data['name']);
         $package->fillFromArray($data);
+        $this->upgrader->upgrade($package);
         return $package;
     }
 

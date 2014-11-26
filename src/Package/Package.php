@@ -59,6 +59,14 @@ class Package {
     protected $prettyName;
 
     /**
+     * Description of the package.
+     *
+     * @var string
+     */
+
+    protected $description;
+
+    /**
      * Versions of the package.
      *
      * @var array
@@ -82,19 +90,32 @@ class Package {
 
     protected $keywords;
 
+    public $time;
+
+    public $maintainers;
+
+    public $type;
+
+    public $repository;
+
+    public $homepage;
+
+    public $downloads;
+
+    public $favers;
+
     /**
      * Constructs the Package.
      *
-     * @param string $name
+     * @param LoaderInterface $loader
+     * @param string          $name
      */
 
     public function __construct(LoaderInterface $loader, $name) {
         $this->loader = $loader;
         $this->name = $name;
         $this->images = [];
-        $this->icon   = null;
         $this->readme = 'README.md';
-        $this->readme = null;
         $this->loaded = false;
     }
 
@@ -183,6 +204,16 @@ class Package {
 
     public function hasIcon() {
         return $this->icon !== null;
+    }
+
+    /**
+     * Returns the package's description.
+     *
+     * @return string
+     */
+
+    public function getDescription() {
+        return $this->description !== null ? $this->description : 'No Description';
     }
 
     /**
@@ -305,41 +336,30 @@ class Package {
      */
 
     public function fillFromArray(array $data) {
-        $this->description  = isset($data['description']) ? $data['description'] : 'No Description';
-        $this->time         = isset($data['time']) ? new Carbon($data['time']) : null;
-        $this->maintainers  = isset($data['maintainers']) ? $data['maintainers'] : null;
-        $this->versions     = isset($data['versions']) ? $data['versions'] : null;
-        $this->type         = isset($data['type']) ? $data['type'] : null;
-        $this->repository   = isset($data['repository']) ? $data['repository'] : null;
-        $this->downloads    = isset($data['downloads'])
-            ? (is_array($data['downloads']) ? $data['downloads'] : ['total' => $data['downloads']])
-            : null;
-        $this->favers       = isset($data['downloads']) ? $data['favers'] : null;
+        if(isset($data['description'])) { $this->description = $data['description']; }
+        if(isset($data['time'])) { $this->time = new Carbon($data['time']); }
+        if(isset($data['maintainers'])) { $this->maintainers = $data['maintainers']; }
+        if(isset($data['versions'])) { $this->versions = $data['versions']; }
+        if(isset($data['type'])) { $this->type = $data['type']; }
+        if(isset($data['repository'])) { $this->repository = $data['repository']; }
+        if(isset($data['downloads'])) {
+            $this->downloads = is_array($data['downloads']) ? $data['downloads'] : ['total' => $data['downloads']];
+            $this->favers = $data['favers'];
+        }
 
-        $latest = $this->getLatestVersion()  === [] ? $data : $this->getLatestVersion();
-        if(isset($latest['homepage'])) {
-            $this->homepage = $latest['homepage'];
-        }
-        if(isset($latest['extra']['readme'])) {
-            $this->readme = $latest['extra']['readme'];
-        }
-        if(isset($latest['extra']['images'])) {
-            $this->images = $latest['extra']['images'];
-        }
-        if(isset($latest['extra']['icon'])) {
-            $this->icon = $latest['extra']['icon'];
-        }
-        if(isset($latest['extra']['title'])) {
-            $this->prettyName = $latest['extra']['title'];
-        }
-        if(isset($latest['extra']['providers'])) {
-            $this->providers = $latest['extra']['providers'];
+        if(isset($data['versions']) && !empty($data['versions'])) {
+            $latest = head($data['versions']);
         } else {
-            $this->providers = [];
+            $latest = $data;
         }
-        if(isset($latest['keywords'])) {
-            $this->keywords = $latest['keywords'];
-        }
+        if(isset($latest['homepage'])) { $this->homepage = $latest['homepage']; }
+        if(isset($latest['extra']['readme'])) { $this->readme = $latest['extra']['readme']; }
+        if(isset($latest['extra']['images'])) { $this->images = $latest['extra']['images']; }
+        if(isset($latest['extra']['icon'])) { $this->icon = $latest['extra']['icon']; }
+        if(isset($latest['extra']['title'])) { $this->prettyName = $latest['extra']['title']; }
+        if(isset($latest['extra']['providers'])) { $this->providers = $latest['extra']['providers']; }
+        else { $this->providers = []; }
+        if(isset($latest['keywords'])) { $this->keywords = $latest['keywords']; }
     }
 
 }

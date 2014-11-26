@@ -33,10 +33,10 @@
                         @endif
                         <div class="Marketplace-item-label">
                             <h1 class="Marketplace-item-title heading-gamma">{{{ $package->getPrettyName() }}}</h1>
-                            <h3 class="heading-delta">{{{ $package->description }}}</h3>
+                            <h3 class="heading-delta">{{{ $package->getDescription() }}}</h3>
                             <ul class="Marketplace-item-icons">
-                                <li><i class="Icon Icon--pushRight Icon-download"></i>{{{ $package->downloads['total'] }}}</li>
-                                <li><i class="Icon Icon--pushRight Icon-star"></i>{{{ $package->favers }}}</li>
+                                <li><span class="Icon Icon--pushRight Icon-download"></span>{{{ $package->downloads['total'] }}}</li>
+                                <li><span class="Icon Icon--pushRight Icon-star"></span>{{{ $package->favers }}}</li>
                             </ul>
                         </div>
                     </a>

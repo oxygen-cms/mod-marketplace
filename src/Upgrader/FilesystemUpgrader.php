@@ -44,10 +44,9 @@ class FilesystemUpgrader implements UpgraderInterface {
 
     public function upgrade(Package $package) {
         $file = $this->path . '/' . $package->getSplitName()[0] . '.json';
-        if(!$this->upgradeFromFile($package, $file)) {
-            $file = $this->path . '/' . implode('.', $package->getSplitName()) . '.json';
-            $this->upgradeFromFile($package, $file);
-        }
+        $this->upgradeFromFile($package, $file);
+        $file = $this->path . '/' . implode('.', $package->getSplitName()) . '.json';
+        $this->upgradeFromFile($package, $file);
     }
     
     /**

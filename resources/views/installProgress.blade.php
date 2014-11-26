@@ -37,28 +37,24 @@
         </div>
     </div>
     <div class="TabSwitcher-tabs TabSwitcher-content">
-        <div class="Row--noLayout">
-            <button
-              type="button"
-              class="Accordion-section" data-switch-to-tab="simple" data-default-tab>
-                <span class="Icon Icon-chevron-right Accordion-section-icon"></span>
-                <span class="Accordion-section-message">Help</span>
-            </button>
-            <div data-tab="simple">
-                <p>Oxygen uses <a href="https://getcomposer.org/">Composer</a> to manage dependencies and install extensions.</p>
-                <p>If you see the message 'Install Log Not Found. Has Installation Started Yet?', then you may need to wait a few moments until the queue worker recieves the install command. If nothing happens for long time, then you may not have a queue worker running. For information about how to set up queues, check the <a href="http://laravel.com/docs/4.2/queues">Laravel</a> docs.</p>
-            </div>
+        <button
+          type="button"
+          class="Accordion-section" data-switch-to-tab="simple" data-default-tab>
+            <span class="Icon Icon-chevron-right Accordion-section-icon"></span>
+            <span class="Accordion-section-message">Help</span>
+        </button>
+        <div data-tab="simple">
+            <p>Oxygen uses <a href="https://getcomposer.org/">Composer</a> to manage dependencies and install extensions.</p>
+            <p>If you see the message 'Install Log Not Found. Has Installation Started Yet?', then you may need to wait a few moments until the queue worker recieves the install command. If nothing happens for long time, then you may not have a queue worker running. For information about how to set up queues, check the <a href="http://laravel.com/docs/4.2/queues">Laravel</a> docs.</p>
         </div>
-        <div class="Row--noLayout">
-            <button
-              type="button"
-              class="Accordion-section" data-switch-to-tab="advanced">
-                <span class="Icon Icon-chevron-right Accordion-section-icon"></span>
-                <span class="Accordion-section-message">Installation Log</span>
-            </button>
-            <div data-tab="advanced">
-                <textarea id="install-log" rows="15" readonly>Contacting server...</textarea>
-            </div>
+        <button
+          type="button"
+          class="Accordion-section" data-switch-to-tab="advanced">
+            <span class="Icon Icon-chevron-right Accordion-section-icon"></span>
+            <span class="Accordion-section-message">Installation Log</span>
+        </button>
+        <div data-tab="advanced">
+            <textarea id="install-log" rows="15" readonly>Contacting server...</textarea>
         </div>
     </div>
 </div>

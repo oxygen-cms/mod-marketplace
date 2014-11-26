@@ -56,20 +56,20 @@
     <div class="Row Row--alignTop Row--border">
         <div class="Cell-aside">
             <ul class="List--bordered">
-                <li><i class="Icon Icon--pushRight Icon-fw Icon-star"></i>{{{ $package->favers }}} stars</li>
-                <li><i class="Icon Icon--pushRight Icon-fw Icon-download"></i>{{{ $package->downloads['total'] }}} downloads</li>
-                <li><i class="Icon Icon--pushRight Icon-fw Icon-user"></i>Authored by {{{ $package->getAuthorsAsSentence() }}}</li>
-                <li><i class="Icon Icon--pushRight Icon-fw Icon-clock-o"></i>Added on {{{ $package->time->toFormattedDateString() }}}</li>
-                <li><i class="Icon Icon--pushRight Icon-fw Icon-info-circle"></i><code>{{{ $package->getName() }}}</code></li>
-                <li><i class="Icon Icon--pushRight Icon-fw Icon-code-fork"></i>Latest Version: <code>{{{ $package->getLatestVersion()['version'] }}}</code></li>
+                <li><span class="Icon Icon--pushRight Icon-fw Icon-star"></span>{{{ $package->favers }}} stars</li>
+                <li><span class="Icon Icon--pushRight Icon-fw Icon-download"></span>{{{ $package->downloads['total'] }}} downloads</li>
+                <li><span class="Icon Icon--pushRight Icon-fw Icon-user"></span>Authored by {{{ $package->getAuthorsAsSentence() }}}</li>
+                <li><span class="Icon Icon--pushRight Icon-fw Icon-clock-o"></span>Added on {{{ $package->time->toFormattedDateString() }}}</li>
+                <li><span class="Icon Icon--pushRight Icon-fw Icon-info-circle"></span><code>{{{ $package->getName() }}}</code></li>
+                <li><span class="Icon Icon--pushRight Icon-fw Icon-code-fork"></span>Latest Version: <code>{{{ $package->getLatestVersion()['version'] }}}</code></li>
                 @if(isset($package->homepage) && $package->homepage !== '')
-                    <li><i class="Icon Icon--pushRight Icon-fw Icon-home"></i><a href="{{{ $package->homepage }}}" target="_blank"><?php
+                    <li><span class="Icon Icon--pushRight Icon-fw Icon-home"></span><a href="{{{ $package->homepage }}}" target="_blank"><?php
                         $url = parse_url($package->homepage);
                         if(isset($url['host'])) { echo e($url['host']); }
                         else { echo 'Homepage'; }
                     ?></a></li>
                 @endif
-                <li><i class="Icon Icon--pushRight Icon-fw Icon-code"></i><a href="{{{ $package->repository }}}" target="_blank">Source on {{{ $package->getRepositoryType() }}}</a></li>
+                <li><span class="Icon Icon--pushRight Icon-fw Icon-code"></span><a href="{{{ $package->repository }}}" target="_blank">Source on {{{ $package->getRepositoryType() }}}</a></li>
             </ul>
         </div>
         <div class="Cell-flex Content">

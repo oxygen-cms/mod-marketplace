@@ -3,6 +3,7 @@
 namespace Oxygen\Marketplace\Installer;
 
 use Composer\Progress\FileProgress;
+use Exception;
 use Illuminate\Config\Repository;
 use Illuminate\Filesystem\Filesystem;
 use Composer\Console\Application;
@@ -68,15 +69,25 @@ class ComposerInstallJob {
         $output = new StreamOutput(fopen($log, 'a', false), OutputInterface::VERBOSITY_DEBUG);
         $progress = new FileProgress($progress, $output);
         $progress->section('Beginning Installation');
+        $progress->indeterminate();
         $progress->notification('Installation Started');
         $application = new Application();
         $application->setAutoExit(false);
-        $application->run($input, $output, $progress);
-        $progress->notification('Installation Complete');
-        $progress->section('Complete');
-        $progress->stopPolling();
+        $application->setCatchExceptions(false);
 
-        $job->delete();
+        try {
+            $application->run($input, $output, $progress);
+            $progress->notification('Installation Complete');
+            $progress->section('Complete');
+            $progress->stopPolling();
+
+            $job->delete();
+        } catch(Exception $e) {
+            $progress->notification($e->getMessage(), 'failed');
+            $progress->stopPolling();
+        }
+
+
     }
 
 }
