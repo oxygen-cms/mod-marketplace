@@ -6,8 +6,10 @@
 
 ?>
 
-<div class="Cell-aside">
-    <h2 class="heading-gamma">Filters</h2>
+<div class="Block Cell-oneThird">
+    <div class="Row--visual">
+        <h2 class="heading-gamma">Filters</h2>
+    </div>
     {{ Form::open(['method' => 'GET', 'class' => 'Form--singleColumn']) }}
         <?php
             $fields = [

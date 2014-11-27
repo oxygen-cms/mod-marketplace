@@ -26,15 +26,15 @@
 </div>
 
 <div class="Block">
-    <div class="Row Row--border Row--highlight">
-        <div class="Cell-aside Text--alignCenter">
+    <div class="Row Row--border Row--highlight Row--singleLine">
+        <div class="Cell-oneThird Text--alignCenter">
             @if($package->hasIcon())
                 <img src="{{{ $package->getIcon()}}}">
             @else
                 <span class="Marketplace-item-icon Icon Icon-dropbox"></span>
             @endif
         </div>
-        <div class="Cell-flex">
+        <div class="Cell-twoThirds Cell--last">
             <h1 class="heading-alpha">{{{ $package->getPrettyName() }}}</h1>
             @if($package->getPrettyName() !== $package->getName())
                 <h2 class="heading-gamma"><code>{{{ $package->getName() }}}</code></h2>
@@ -53,8 +53,8 @@
             </div>
         </div>
     </div>
-    <div class="Row Row--alignTop Row--border">
-        <div class="Cell-aside">
+    <div class="Row Row--alignTop Row--border Row--singleLine">
+        <div class="Cell-oneThird">
             <ul class="List--bordered">
                 <li><span class="Icon Icon--pushRight Icon-fw Icon-star"></span>{{{ $package->favers }}} stars</li>
                 <li><span class="Icon Icon--pushRight Icon-fw Icon-download"></span>{{{ $package->downloads['total'] }}} downloads</li>
@@ -72,11 +72,11 @@
                 <li><span class="Icon Icon--pushRight Icon-fw Icon-code"></span><a href="{{{ $package->repository }}}" target="_blank">Source on {{{ $package->getRepositoryType() }}}</a></li>
             </ul>
         </div>
-        <div class="Cell-flex Content">
+        <div class="Cell-twoThirds Cell--last Content">
             {{ $package->getReadme('<em>No readme found</em>') }}
         </div>
     </div>
-    <div class="Row--noLayout Row--border">
+    <div class="Row--visual Row--border">
         <h2 class="heading-beta">Photos &amp; Screenshots</h2>
         <?php
             $images = $package->getImages();
@@ -95,7 +95,7 @@
             </div>
         @endif
     </div>
-    <div class="Row--noLayout Row--border">
+    <div class="Row--visual Row--border">
             <h2 class="heading-beta">Service Providers</h2>
             <br>
             <?php
@@ -110,7 +110,7 @@
                 @endforeach
             @endif
         </div>
-    <div class="Row--noLayout Row--border">
+    <div class="Row--visual Row--border">
         <h2 class="heading-beta">More Information</h2>
         <?php
             $version = $package->getLatestVersion()

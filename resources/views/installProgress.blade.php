@@ -24,7 +24,7 @@
 
 <div class="Block">
     {{ Form::token() }}
-    <div class="Row--noLayout">
+    <div class="Row--visual">
         <div class="ProgressBar" id="install-progress"><span class="ProgressBar-fill" style="width: 100%;"></span></div>
         <div class="ProgressBar-message">
             <span class="ProgressBar-message-item"></span>
