@@ -35,7 +35,9 @@
                         @if($package->hasIcon())
                             <img src="{{{ $package->getIcon()}}}">
                         @else
-                            <span class="Marketplace-item-icon Icon Icon-dropbox"></span>
+                            <div class="Icon-container">
+                                <span class="Icon Icon--gigantic Icon--light Icon-dropbox"></span>
+                            </div>
                         @endif
                     </div>
                     <h2 class="Header-title heading-gamma flex-item">
