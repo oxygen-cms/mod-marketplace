@@ -130,6 +130,7 @@ window.onload = function() {
             },
             error: function(response, textStatus, errorThrown) {
                 Oxygen.Ajax.handleError(response, textStatus, errorThrown);
+                setTimeout(poll, pollInterval);
             }
         });
     };
