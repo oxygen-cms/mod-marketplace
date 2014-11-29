@@ -189,6 +189,59 @@ class ComposerInstaller implements InstallerInterface {
     }
 
     /**
+     * Returns the progress for the installation.
+     *
+     * @return array
+     */
+
+    public function getInstallProgress() {
+        if(!$this->hasInstallProgress()) {
+            return false;
+        }
+
+        $log = $this->config->get('oxygen/marketplace::config.install.log');
+        $progress = $this->config->get('oxygen/marketplace::config.install.progress');
+
+        $log = $this->files->get($log);
+        $response = json_decode($this->files->get($progress), true);
+        $response['log'] = $log;
+        return $response;
+    }
+
+    /**
+     * Clears installation progress.
+     *
+     * @return void
+     */
+
+    public function clearInstallProgress() {
+        $files = [
+            $this->config->get('oxygen/marketplace::config.install.log'),
+            $this->config->get('oxygen/marketplace::config.install.progress')
+        ];
+
+        foreach($files as $file) {
+            $this->files->delete($file);
+        }
+    }
+
+    /**
+     * Determines if the installation progress exists.
+     *
+     * @return boolean
+     */
+
+    public function hasInstallProgress() {
+        $log = $this->config->get('oxygen/marketplace::config.install.log');
+        $progress = $this->config->get('oxygen/marketplace::config.install.progress');
+        if(!$this->files->exists($log) || !$this->files->exists($progress)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
      * Returns an array form of the composer.json file.
      *
      * @return array

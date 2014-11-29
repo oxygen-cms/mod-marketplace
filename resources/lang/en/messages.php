@@ -17,6 +17,7 @@ return [
     'installRequestSent'        => 'The Install Command Has Been Sent',
     'installRequestAlreadySent' => 'The Install Command Already Has Been Sent',
     'logNotFound'               => 'Install Log Not Found.<br>Has Installation Started Yet?',
+    'logCleared'                => 'Install Log Cleared',
 
     'provider' => [
         'enabled'           => 'Service Provider Enabled',

@@ -23,9 +23,17 @@
 </div>
 
 <div class="Block">
-    {{ Form::open('id' => 'progressForm', 'route' => $blueprint->getRouteName('postInstallProgress'), 'method' => 'POST') }}
-        {{ Form::token() }}
-    {{ Form::close() }}
+    <?php
+        echo Form::open([
+            'id' => 'progressForm',
+            'route' => $blueprint->getRouteName('postInstallProgress'),
+            'method' => 'POST']
+        );
+
+        echo Form::token();
+
+        echo Form::close();
+    ?>
     <div class="Row--visual">
         <div class="ProgressBar" id="install-progress"><span class="ProgressBar-fill" style="width: 100%;"></span></div>
         <div class="ProgressBar-message">
@@ -48,6 +56,10 @@
         <div data-tab="simple">
             <p>Oxygen uses <a href="https://getcomposer.org/">Composer</a> to manage dependencies and install extensions.</p>
             <p>If you see the message 'Install Log Not Found. Has Installation Started Yet?', then you may need to wait a few moments until the queue worker recieves the install command. If nothing happens for long time, then you may not have a queue worker running. For information about how to set up queues, check the <a href="http://laravel.com/docs/4.2/queues">Laravel</a> docs.</p>
+            <?php
+                $toolbarItem = $blueprint->getToolbarItem('deleteInstallProgress');
+                echo $toolbarItem->render(['margin' => 'vertical']);
+            ?>
         </div>
         <button
           type="button"

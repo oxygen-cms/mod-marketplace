@@ -189,25 +189,35 @@ class MarketplaceController extends BlueprintController {
      */
 
     public function postInstallProgress() {
-        $log = Config::get('oxygen/marketplace::config.install.log');
-        $progress = Config::get('oxygen/marketplace::config.install.progress');
-        if(!File::exists($log) || !File::exists($progress)) {
+        $response = Marketplace::getInstaller()->getInstallProgress();
+
+        if($response === false) {
             return Response::json([
                 'progress' => false,
                 'notification' => ['status' => 'failed', 'content' => Lang::get('oxygen/marketplace::messages.logNotFound'), 'unique' => 'notStarted']
             ]);
         }
-        $log = File::get($log);
-
-        $response = json_decode(File::get($progress), true);
-        $response['log'] = $log;
 
         if(isset($response['stopPolling']) && $response['stopPolling'] === true) {
-            File::delete($progress);
-            File::delete($log);
+            Marketplace::getInstaller()->clearInstallProgress();
         }
 
         return Response::json($response);
+    }
+
+    /**
+     * Returns the installation progress.
+     *
+     * @return string
+     */
+
+    public function deleteInstallProgress() {
+        Marketplace::getInstaller()->clearInstallProgress();
+
+        return Response::notification(
+            new Notification(Lang::get('oxygen/marketplace::messages.logCleared')),
+            ['refresh' => true]
+        );
     }
 
     /**
@@ -257,18 +267,13 @@ class MarketplaceController extends BlueprintController {
             );
         }
 
-        try {
-            $repository->isEnabled($provider) ? $repository->disable($provider) : $repository->enable($provider);
+        $repository->isEnabled($provider) ? $repository->disable($provider) : $repository->enable($provider);
 
-            return Response::notification(new Notification(
-                $repository->isEnabled($provider)
-                    ? Lang::get('oxygen/marketplace::messages.provider.enabled')
-                    : Lang::get('oxygen/marketplace::messages.provider.disabled')
-            ), ['refresh' => true]);
-        } catch(RewriteException $e) {
-            echo $e->regex;
-        }
-
+        return Response::notification(new Notification(
+            $repository->isEnabled($provider)
+                ? Lang::get('oxygen/marketplace::messages.provider.enabled')
+                : Lang::get('oxygen/marketplace::messages.provider.disabled')
+        ), ['refresh' => true]);
     }
 
 }

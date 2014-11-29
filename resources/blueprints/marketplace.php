@@ -1,8 +1,8 @@
 <?php
 
-    use Oxygen\Core\Form\Field;
-    use Oxygen\Core\Html\Dialog\Dialog;
-    use Oxygen\Core\Html\Toolbar\Factory\FormToolbarItemFactory;
+use Oxygen\Core\Form\Field;
+use Oxygen\Core\Html\Dialog\Dialog;
+use Oxygen\Core\Html\Toolbar\Factory\FormToolbarItemFactory;
 
 Blueprint::make('Marketplace', function($blueprint) {
     $blueprint->setController('Oxygen\Marketplace\Controller\MarketplaceController');
@@ -62,6 +62,23 @@ Blueprint::make('Marketplace', function($blueprint) {
     $blueprint->makeAction([
         'name' => 'getInstallProgress',
         'pattern' => 'install/progress'
+    ]);
+
+    $blueprint->makeAction([
+        'name' => 'deleteInstallProgress',
+        'pattern' => 'install/progress',
+        'method' => 'DELETE'
+    ]);
+    $blueprint->makeToolbarItem([
+        'action' => 'deleteInstallProgress',
+        'label' => 'Clear Install Log',
+        'icon' => 'trash-o',
+        'color' => 'red',
+        'shouldRenderCallback' => function($item, $arguments) {
+            return
+                $item->shouldRenderBasic($arguments) &&
+                Marketplace::getInstaller()->hasInstallProgress();
+        }
     ]);
 
     $blueprint->makeAction([
