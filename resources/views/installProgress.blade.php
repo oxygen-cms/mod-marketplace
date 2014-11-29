@@ -23,7 +23,9 @@
 </div>
 
 <div class="Block">
-    {{ Form::token() }}
+    {{ Form::open('id' => 'progressForm', 'route' => $blueprint->getRouteName('postInstallProgress'), 'method' => 'POST') }}
+        {{ Form::token() }}
+    {{ Form::close() }}
     <div class="Row--visual">
         <div class="ProgressBar" id="install-progress"><span class="ProgressBar-fill" style="width: 100%;"></span></div>
         <div class="ProgressBar-message">
@@ -67,14 +69,15 @@ window.onload = function() {
     var times = 0;
     var currentSection = null;
     var currentNotification = null;
+    var form = $("#progressForm");
     var data = {'_token': $('input[name="_token"]').val()};
     var pollInterval = 2000;
     var poll = function() {
         times++;
         $.ajax({
-            type: "POST",
+            type: form.attr("method"),
             dataType: "json",
-            url: "/admin/marketplace/install/progress",
+            url: form.attr("action"),
             data: data,
             success: function(response) {
                 if(response.log) {
