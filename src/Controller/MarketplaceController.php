@@ -204,6 +204,7 @@ class MarketplaceController extends BlueprintController {
 
         if(isset($response['stopPolling']) && $response['stopPolling'] === true) {
             File::delete($progress);
+            File::delete($log);
         }
 
         return Response::json($response);

@@ -36,7 +36,7 @@
             </span>
         </div>
     </div>
-    <div class="TabSwitcher-tabs TabSwitcher-content">
+    <div class="Row--visual TabSwitcher-tabs TabSwitcher-content">
         <button
           type="button"
           class="Accordion-section" data-switch-to-tab="simple" data-default-tab>
