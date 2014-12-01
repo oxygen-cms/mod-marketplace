@@ -50,7 +50,7 @@ class ComposerInstallJob {
      */
 
     public function fire($job, $data) {
-        echo 'Running: Oxygen\Marketplace\Installer\Install';
+        echo 'Running: Oxygen\Marketplace\Installer\ComposerInstallJob';
 
         // Composer\Factory::getHomeDir() method
         // needs COMPOSER_HOME environment variable set
@@ -86,8 +86,6 @@ class ComposerInstallJob {
             $progress->notification($e->getMessage(), 'failed');
             $progress->stopPolling();
         }
-
-
     }
 
 }
