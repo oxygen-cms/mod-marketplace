@@ -4,7 +4,9 @@ namespace Oxygen\Marketplace\Installer;
 
 use Composer\Progress\FileProgress;
 use Exception;
+use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Config\Repository;
+use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Composer\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -30,15 +32,35 @@ class ComposerInstallJob {
     protected $config;
 
     /**
+     * Event dispatcher.
+     *
+     * @var Dispatcher
+     */
+
+    protected $events;
+
+    /**
+     * Laravel app.
+     *
+     * @var Application
+     */
+
+    protected $app;
+
+    /**
      * Constructs the Install command.
      *
      * @param Filesystem $filesystem
      * @param Repository $repository
+     * @param Dispatcher $events
+     * @param LaravelApplication $app
      */
 
-    public function __construct(Filesystem $filesystem, Repository $repository) {
+    public function __construct(Filesystem $filesystem, Repository $repository, Dispatcher $events, LaravelApplication $app) {
         $this->files = $filesystem;
         $this->config = $repository;
+        $this->events = $events;
+        $this->app = $app;
     }
 
     /**
@@ -50,7 +72,7 @@ class ComposerInstallJob {
      */
 
     public function fire($job, $data) {
-        echo 'Running: Oxygen\Marketplace\Installer\ComposerInstallJob';
+        echo 'Running: Oxygen\Marketplace\Installer\ComposerInstallJob' . "\n";
 
         // Composer\Factory::getHomeDir() method
         // needs COMPOSER_HOME environment variable set
@@ -66,25 +88,29 @@ class ComposerInstallJob {
         }
 
         $input = new ArrayInput(['command' => 'update']);
-        $output = new StreamOutput(fopen($log, 'a', false), OutputInterface::VERBOSITY_DEBUG);
-        $progress = new FileProgress($progress, $output);
-        $progress->section('Beginning Installation');
-        $progress->indeterminate();
-        $progress->notification('Installation Started');
+        $this->output = new StreamOutput(fopen($log, 'a', false), OutputInterface::VERBOSITY_DEBUG);
+        $this->progress = new FileProgress($progress, $this->output);
+        $this->progress->section('Beginning Installation');
+        $this->progress->indeterminate();
+        $this->progress->notification('Installation Started');
         $application = new Application();
         $application->setAutoExit(false);
         $application->setCatchExceptions(false);
 
         try {
-            $application->run($input, $output, $progress);
-            $progress->notification('Installation Complete');
-            $progress->section('Complete');
-            $progress->stopPolling();
+            //$application->run($input, $this->output, $this->progress);
+
+            $this->events->fire('oxygen.marketplace.postUpdate', [$this->progress, $this->output]);
+
+            $this->progress->notification('Installation Complete');
+            $this->progress->section('Complete');
+            $this->progress->stopPolling();
 
             $job->delete();
         } catch(Exception $e) {
-            $progress->notification($e->getMessage(), 'failed');
-            $progress->stopPolling();
+            $this->progress->notification($e->getMessage(), 'failed');
+            $this->progress->stopPolling();
+            throw $e;
         }
     }
 
