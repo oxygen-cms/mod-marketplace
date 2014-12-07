@@ -116,7 +116,7 @@ class MarketplaceController extends BlueprintController {
 
         return View::make('oxygen/marketplace::view', [
             'package' => $package,
-            'title' => Lang::get('oxygen/marketplace::ui.views.title', ['name' => $package->getPrettyName()])
+            'title' => Lang::get('oxygen/marketplace::ui.view.title', ['name' => $package->getPrettyName()])
         ]);
     }
 

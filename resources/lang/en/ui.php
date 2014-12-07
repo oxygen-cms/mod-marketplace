@@ -20,7 +20,7 @@ return [
     ],
 
     'view' => [
-        'title'         => ':name - Marketplace',
+        'title'            => ':name - Marketplace',
         'alreadyInstalled' => 'Already Installed'
     ],
 
