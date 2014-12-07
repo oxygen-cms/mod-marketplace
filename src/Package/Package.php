@@ -262,7 +262,7 @@ class Package {
      */
 
     public function getKeywords() {
-        return $this->keywords;
+        return $this->keywords ?: [];
     }
 
     /**
