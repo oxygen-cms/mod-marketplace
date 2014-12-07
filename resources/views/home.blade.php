@@ -65,8 +65,10 @@
         @endif
     </div>
 </div>
-<div class="Row">
-    {{ $paginator->links() }}
-</div>
+@if($paginator !== null)
+    <div class="Row">
+            {{ $paginator->links() }}
+    </div>
+@endif
 
 @stop
