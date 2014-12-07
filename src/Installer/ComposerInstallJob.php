@@ -98,7 +98,7 @@ class ComposerInstallJob {
         $application->setCatchExceptions(false);
 
         try {
-            //$application->run($input, $this->output, $this->progress);
+            $application->run($input, $this->output, $this->progress);
 
             $this->events->fire('oxygen.marketplace.postUpdate', [$this->progress, $this->output]);
 
