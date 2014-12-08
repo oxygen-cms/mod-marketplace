@@ -77,6 +77,7 @@ class ComposerInstallJob {
         // Composer\Factory::getHomeDir() method
         // needs COMPOSER_HOME environment variable set
         putenv('COMPOSER=' . base_path() . '/composer.json');
+        putenv('COMPOSER_HOME=' . base_path());
 
         $log = $this->config->get('oxygen/marketplace::config.install.log');
         $progress = $this->config->get('oxygen/marketplace::config.install.progress');
