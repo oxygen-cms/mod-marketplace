@@ -30,7 +30,7 @@
                 <?php
                     $i++;
                 ?>
-                <a href="{{{ URL::route('marketplace.getDetails', $package->getSplitName()) }}}" class="Marketplace-item Header Header--block Block Cell-oneThird<?php if($i % 3 === 0) { echo ' Cell--last'; } ?>">
+                <a href="{{{ URL::route('marketplace.getDetails', $package->getSplitName()) }}}" class="Marketplace-item Header Header--block Block Cell-oneThird<?php if($i % 3 === 0) { echo ' Cell--last'; } ?> Link--smoothState">
                     <div class="Header-content flex-item">
                         @if($package->hasIcon())
                             <img src="{{{ $package->getIcon()}}}">
