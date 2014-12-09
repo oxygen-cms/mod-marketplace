@@ -97,7 +97,7 @@ class PackagistLoader implements LoaderInterface {
             )->json();
         } catch(RequestException $e) {
             // let's return the usual 404 error page
-            if($e->getResponse()->getStatusCode() === '404') {
+            if($e->getResponse() !== null && $e->getResponse()->getStatusCode() === '404') {
                 throw new NotFoundHttpException();
             } else {
                 throw new LoadingException($e->getMessage());
