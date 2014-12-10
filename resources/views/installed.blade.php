@@ -50,8 +50,8 @@
                    <div class="Text--indent">
                        @foreach($providers as $provider)
                            <?php
-                               $header = Header::fromBlueprint($blueprint, $provider['name'], ['provider' => $provider['class']], Header::TYPE_TINY, 'provider');
-                               $header->setSubtitle($provider['class']);
+                               $header = Header::fromBlueprint($blueprint, $provider['class'], ['provider' => $provider['class']], Header::TYPE_TINY, 'provider');
+                               $header->setSubtitle($provider['name']);
                                echo $header->render();
                            ?>
                            <p>{{{ $provider['description'] }}}</p>

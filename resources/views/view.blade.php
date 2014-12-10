@@ -107,7 +107,7 @@
                 <p><em>This package contains no service providers.</em></p>
             @else
                 @foreach($providers as $provider)
-                    <h3 class="heading-delta">{{{ $provider['name'] }}} <span class="subtext">{{{ $provider['class'] }}}</span></h3>
+                    <h3 class="heading-delta">{{{ $provider['class'] }}} <span class="subtext">{{{ $provider['name'] }}}</span></h3>
                     <p>{{{ $provider['description'] }}}</p>
                 @endforeach
             @endif

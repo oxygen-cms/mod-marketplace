@@ -106,6 +106,7 @@ Blueprint::make('Marketplace', function($blueprint) {
     $blueprint->makeAction([
         'name' => 'postRequire',
         'pattern' => '{vendor}/{package}/require/{version?}',
+        'method' => 'POST',
         'routeParametersCallback' => function($action, array $options) {
             return [
                 $options['vendor'],
