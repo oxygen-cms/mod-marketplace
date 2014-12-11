@@ -10,7 +10,7 @@ Blueprint::make('Marketplace', function($blueprint) {
     $blueprint->setIcon('cloud');
 
     $blueprint->setToolbarOrders([
-        'section' => ['getHome.search', 'getInstall', 'getInstalled'],
+        'section' => ['getHome.search', 'postInstall', 'getInstalled'],
         'item' => ['getDetails', 'postRequire'],
         'provider' => ['postToggleProvider']
     ]);
@@ -40,11 +40,12 @@ Blueprint::make('Marketplace', function($blueprint) {
     ], new FormToolbarItemFactory());
 
     $blueprint->makeAction([
-        'name' => 'getInstall',
-        'pattern' => 'install'
+        'name' => 'postInstall',
+        'pattern' => 'install',
+        'method' => 'POST'
     ]);
     $blueprint->makeToolbarItem([
-        'action' => 'getInstall',
+        'action' => 'postInstall',
         'label' => 'Run Installer',
         'icon' => 'download',
         'color' => 'green',

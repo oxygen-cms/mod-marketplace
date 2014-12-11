@@ -156,7 +156,7 @@ class MarketplaceController extends BlueprintController {
      * @return Response
      */
 
-    public function getInstall() {
+    public function postInstall() {
         $sentRequest = Marketplace::getInstaller()->install();
         $route = $this->blueprint->getRouteName('getInstallProgress');
 
