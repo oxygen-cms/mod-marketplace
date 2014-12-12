@@ -15,13 +15,15 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "oxygen/core": "dev-master",
+        "oxygen/core": "~0.1.0",
+        "composer/composer": "@dev",
         "illuminate/support": "4.2.*"
     },
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "4.2.*",
         "michelf/php-markdown": "~1.4",
+        "composer/composer": "@dev",
         "guzzlehttp/guzzle": "~5.0"
     },
     "autoload": {
@@ -29,7 +31,12 @@
             "Oxygen\\Marketplace\\": "src/"
         }
     },
-    "minimum-stability": "stable",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/oxygen-cms/composer"
+        }
+    ],
     "extra": {
         "title": "Oxygen Marketplace",
         "readme": "oxygen.md",
