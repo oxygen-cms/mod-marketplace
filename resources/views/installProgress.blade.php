@@ -73,71 +73,92 @@
     </div>
 </div>
 
-<script>
+<?php Event::listen('oxygen.layout.page.after', function() { ?>
 
-window.onload = function() {
-    var progressBar = new Oxygen.ProgressBar($("#install-progress"));
-    progressBar.transitionTo(1, 1);
-    var times = 0;
-    var currentSection = null;
-    var currentNotification = null;
-    var form = $("#progressForm");
-    var data = {'_token': $('input[name="_token"]').val()};
-    var pollInterval = 2000;
-    var poll = function() {
-        times++;
-        $.ajax({
-            type: form.attr("method"),
-            dataType: "json",
-            url: form.attr("action"),
-            data: data,
-            success: function(response) {
-                if(response.log) {
-                    $("#install-log").html(response.log);
-                }
-
-                if(response.progress === false) {
-                    progressBar.reset();
-                    $("#install-log").html("");
-                } else {
-                    if(response.progress) {
-                        if(response.progress.section.count !== currentSection) {
-                            progressBar.setSectionCount(response.progress.section.count);
-                            progressBar.setSectionMessage(response.progress.section.message);
-                            progressBar.reset(function() {
-                                progressBar.transitionTo(response.progress.item.count, response.progress.item.total);
-                            });
-                            currentSection = response.progress.section.count;
-                        } else {
-                            progressBar.transitionTo(response.progress.item.count, response.progress.item.total);
+    <script>
+        var Oxygen = Oxygen || {};
+        Oxygen.load = Oxygen.load || [];
+        Oxygen.load.push(function() {
+            var progressBar = new Oxygen.ProgressBar($("#install-progress"));
+            progressBar.transitionTo(1, 1);
+            var times = 0;
+            var currentSection = null;
+            var currentNotification = null;
+            var form = $("#progressForm");
+            var data = {'_token': $('input[name="_token"]').val()};
+            var pollInterval = 2000;
+            var poll = function() {
+                times++;
+                $.ajax({
+                    type: form.attr("method"),
+                    dataType: "json",
+                    url: form.attr("action"),
+                    data: data,
+                    success: function(response) {
+                        if(response.log) {
+                            $("#install-log").html(response.log);
                         }
 
-                        progressBar.setMessage(response.progress.item.message);
+                        if(response.progress === false) {
+                            progressBar.reset();
+                            $("#install-log").html("");
+                        } else {
+                            if(response.progress) {
+                                if(response.progress.section.count !== currentSection) {
+                                    progressBar.setSectionCount(response.progress.section.count);
+                                    progressBar.setSectionMessage(response.progress.section.message);
+                                    progressBar.reset(function() {
+                                        progressBar.transitionTo(response.progress.item.count, response.progress.item.total);
+                                    });
+                                    currentSection = response.progress.section.count;
+                                } else {
+                                    progressBar.transitionTo(response.progress.item.count, response.progress.item.total);
+                                }
 
+                                progressBar.setMessage(response.progress.item.message);
+
+                            }
+                        }
+
+                        if(response.notification) {
+                            if(!response.notification.unique || currentNotification !== response.notification.unique) {
+                                new Oxygen.Notification(response.notification);
+                                currentNotification = response.notification.unique;
+                            }
+                        }
+
+                        if(typeof Pace !== "undefined") {
+                            console.log('ignoring');
+                            setTimeout(function() {
+                                Pace.ignore(poll);
+                            }, pollInterval);
+                        } else {
+                            setTimeout(poll, pollInterval);
+                        }
+                    },
+                    error: function(response, textStatus, errorThrown) {
+                        Oxygen.Ajax.handleError(response, textStatus, errorThrown);
+
+                        if(typeof Pace !== "undefined") {
+                            console.log('ignoring');
+                            setTimeout(function() {
+                                Pace.ignore(poll);
+                            }, pollInterval);
+                        } else {
+                            setTimeout(poll, pollInterval);
+                        }
                     }
-                }
+                });
+            };
 
-                if(response.notification) {
-                    if(!response.notification.unique || currentNotification !== response.notification.unique) {
-                        new Oxygen.Notification(response.notification);
-                        currentNotification = response.notification.unique;
-                    }
-                }
-
-                if(response.stopPolling !== true) {
-                    setTimeout(poll, pollInterval);
-                }
-            },
-            error: function(response, textStatus, errorThrown) {
-                Oxygen.Ajax.handleError(response, textStatus, errorThrown);
-                setTimeout(poll, pollInterval);
+            if(typeof Pace !== 'undefined') {
+                Pace.ignore(poll);
+            } else {
+                poll();
             }
         });
-    };
+    </script>
 
-    poll();
-};
-
-</script>
+<?php }); ?>
 
 @stop
