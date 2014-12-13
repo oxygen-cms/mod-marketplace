@@ -31,12 +31,6 @@
             "Oxygen\\Marketplace\\": "src/"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/oxygen-cms/composer"
-        }
-    ],
     "extra": {
         "title": "Oxygen Marketplace",
         "readme": "oxygen.md",
