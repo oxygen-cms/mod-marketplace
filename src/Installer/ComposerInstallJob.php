@@ -88,7 +88,7 @@ class ComposerInstallJob {
             }
         }
 
-        $input = new ArrayInput(['command' => 'update']);
+        $input = new ArrayInput($this->config->get('oxygen/marketplace::config.install.command'));
         $this->output = new StreamOutput(fopen($log, 'a', false), OutputInterface::VERBOSITY_DEBUG);
         $this->progress = new FileProgress($progress, $this->output);
         $this->progress->section('Beginning Installation');
