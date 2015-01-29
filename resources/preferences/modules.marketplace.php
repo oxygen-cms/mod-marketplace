@@ -19,7 +19,7 @@ Preferences::register('modules.marketplace', function($schema) {
                 ],
                 [
                     'name' => 'defaultSearch.type',
-                    'label' => 'type'
+                    'label' => 'Type'
                 ]
             ]
         ]
