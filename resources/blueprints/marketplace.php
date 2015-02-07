@@ -1,6 +1,6 @@
 <?php
 
-use Oxygen\Core\Form\Field;
+use Oxygen\Core\Form\FieldMetadata;
 use Oxygen\Core\Html\Dialog\Dialog;
 use Oxygen\Core\Html\Toolbar\Factory\FormToolbarItemFactory;
 
@@ -28,7 +28,7 @@ Blueprint::make('Marketplace', function($blueprint) {
         'action' => 'getHome',
         'identifier' => 'getHome.search',
         'fields' => function() {
-            $query = new Field('q', 'search', true);
+            $query = new FieldMetadata('q', 'search', true);
             $query->label = 'Query';
             $query->placeholder = 'Search for Packages';
             $query->attributes['results'] = 5;

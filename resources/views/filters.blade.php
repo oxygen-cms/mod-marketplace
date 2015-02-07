@@ -1,8 +1,8 @@
 <?php
 
-    use Oxygen\Core\Html\Form\EditableField;
+    use Oxygen\Core\Html\Form\EditableField;use Oxygen\Core\Html\Form\Label;use Oxygen\Core\Html\Form\Row;
 
-    $exclude = isset($exclude) ? $exclude : [];
+$exclude = isset($exclude) ? $exclude : [];
 
 ?>
 
@@ -20,8 +20,11 @@
             ];
 
             foreach($fields as $field):
-                if(!in_array($field->getMeta()->name, $exclude))
-               echo $field->render(['entireRow' => true]);
+                if(!in_array($field->getMeta()->name, $exclude) && $field->getMeta()->editable) {
+                    $label = new Label($field->getMeta());
+                    $row = new Row([$label, $field]);
+                    echo $row->render();
+                }
             endforeach;
         ?>
         <div class="Row Form-footer">
