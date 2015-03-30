@@ -16,6 +16,7 @@ return [
         'log'      => storage_path() . '/marketplace/log.txt',
         'command'  => [
             'command' => 'update',
+            '--no-interaction' => true,
             '--prefer-dist' => true,
             '--no-dev' => true,
             '--optimize-autoloader' => true
