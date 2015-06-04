@@ -41,7 +41,6 @@ class Marketplace {
      * @param InstallerInterface $installer
      * @param ProviderRepository $providers
      */
-
     public function __construct(LoaderInterface $loader, InstallerInterface $installer, UpgraderInterface $upgrader, ProviderRepository $providers) {
         $this->loader = $loader;
         $this->installer = $installer;
@@ -56,7 +55,6 @@ class Marketplace {
      * @param boolean $loadDetails
      * @return array
      */
-
     public function search(array $filters = [], $loadDetails = true) {
         $page = isset($filters['page']) ? $filters['page'] : 1;
         $response = $this->loader->search($filters);
@@ -71,7 +69,6 @@ class Marketplace {
      * @param string $name
      * @return Package
      */
-
     public function get($name) {
         $data = $this->loader->getPackageDetails($name)['package'];
         $package = new Package($this->loader, $data['name']);
@@ -86,7 +83,6 @@ class Marketplace {
      * @param array $packages
      * @return void
      */
-
     public function loadDetails($packages) {
         $results = $this->loader->getPackageDetails(array_keys($packages));
 
@@ -101,7 +97,6 @@ class Marketplace {
      *
      * @return InstallerInterface
      */
-
     public function getInstaller() {
         return $this->installer;
     }
@@ -111,7 +106,6 @@ class Marketplace {
      *
      * @return ProviderRepository
      */
-
     public function getProviderRepository() {
         return $this->providerRepository;
     }
@@ -122,7 +116,6 @@ class Marketplace {
      * @param array $filters
      * @return array
      */
-
     public function getInstalledPackages(array $filters) {
         $installed = $this->installer->getInstalledPackages();
 
@@ -139,7 +132,6 @@ class Marketplace {
      * @param boolean   $loadDetails
      * @return array
      */
-
     public function addPackagesFromArray(array $response, $loadDetails = true) {
         $packages = [];
 

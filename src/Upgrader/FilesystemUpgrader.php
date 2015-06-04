@@ -29,7 +29,6 @@ class FilesystemUpgrader implements UpgraderInterface {
      * @param Filesystem $files
      * @param string     $path
      */
-
     public function __construct(Filesystem $files, $path) {
         $this->files = $files;
         $this->path = $path;
@@ -41,7 +40,6 @@ class FilesystemUpgrader implements UpgraderInterface {
      * @param Package $package
      * @return void
      */
-
     public function upgrade(Package $package) {
         $file = $this->path . '/' . $package->getSplitName()[0] . '.json';
         $this->upgradeFromFile($package, $file);

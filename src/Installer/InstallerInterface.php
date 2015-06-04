@@ -11,7 +11,6 @@ interface InstallerInterface {
      * @param string $version
      * @return void
      */
-
     public function add($package, $version);
 
     /**
@@ -20,7 +19,6 @@ interface InstallerInterface {
      * @param string $package
      * @return void|boolean
      */
-
     public function remove($package);
 
     /**
@@ -29,7 +27,6 @@ interface InstallerInterface {
      * @param string $package
      * @return boolean
      */
-
     public function isRequired($package);
 
     /**
@@ -38,7 +35,6 @@ interface InstallerInterface {
      * @param string $package
      * @return boolean
      */
-
     public function isInstalled($package);
 
     /**
@@ -47,7 +43,6 @@ interface InstallerInterface {
      * @param string $package
      * @return string
      */
-
     public function getStatus($package);
 
     /**
@@ -55,7 +50,6 @@ interface InstallerInterface {
      *
      * @return boolean
      */
-
     public function install();
 
     /**
@@ -63,7 +57,6 @@ interface InstallerInterface {
      *
      * @return boolean
      */
-
     public function isInstalling();
 
     /**
@@ -71,7 +64,6 @@ interface InstallerInterface {
      *
      * @return array
      */
-
     public function getInstalledPackages();
 
 }

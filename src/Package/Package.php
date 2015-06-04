@@ -47,7 +47,6 @@ class Package {
      *
      * @var array
      */
-
     public $readme;
 
     /**
@@ -110,7 +109,6 @@ class Package {
      * @param LoaderInterface $loader
      * @param string          $name
      */
-
     public function __construct(LoaderInterface $loader, $name) {
         $this->loader = $loader;
         $this->name = $name;
@@ -124,7 +122,6 @@ class Package {
      *
      * @return string
      */
-
     public function getName() {
         return $this->name;
     }
@@ -134,7 +131,6 @@ class Package {
      *
      * @return string
      */
-
     public function getPrettyName() {
         if($this->prettyName !== null) {
             return $this->prettyName;
@@ -148,7 +144,6 @@ class Package {
      *
      * @return array
      */
-
     public function getSplitName() {
         return explode('/', $this->name);
     }
@@ -158,7 +153,6 @@ class Package {
      *
      * @return boolean
      */
-
     public function hasImages() {
         $this->load();
         return !empty($this->images);
@@ -169,7 +163,6 @@ class Package {
      *
      * @return array
      */
-
     public function getImages() {
         if(!$this->hasImages()) { return []; }
 
@@ -187,7 +180,6 @@ class Package {
      *
      * @return string
      */
-
     public function getIcon() {
         if(!isset(parse_url($this->icon)['scheme'])) {
             return $this->loader->getUrl($this, $this->icon);
@@ -201,7 +193,6 @@ class Package {
      *
      * @return boolean
      */
-
     public function hasIcon() {
         return $this->icon !== null;
     }
@@ -211,7 +202,6 @@ class Package {
      *
      * @return string
      */
-
     public function getDescription() {
         return $this->description !== null ? $this->description : 'No Description';
     }
@@ -222,7 +212,6 @@ class Package {
      * @param mixed $default
      * @return string
      */
-
     public function getReadme($default = null) {
         try {
             $readme = $this->loader->getReadme($this);
@@ -240,7 +229,6 @@ class Package {
      *
      * @return array
      */
-
     public function getLatestVersion() {
         return !is_null($this->versions) ? head($this->versions) : [];
     }
@@ -250,7 +238,6 @@ class Package {
      *
      * @return array
      */
-
     public function getVersions() {
         return $this->versions;
     }
@@ -260,7 +247,6 @@ class Package {
      *
      * @return array
      */
-
     public function getKeywords() {
         return $this->keywords ?: [];
     }
@@ -270,7 +256,6 @@ class Package {
      *
      * @return array
      */
-
     public function getProviders() {
         return $this->providers !== null ? $this->providers : [];
     }
@@ -280,7 +265,6 @@ class Package {
      *
      * @return array
      */
-
     public function getRepositoryType() {
         if(strpos($this->repository, 'github.com/') !== false) {
             return 'GitHub';
@@ -295,7 +279,6 @@ class Package {
      * @param null $version
      * @return string
      */
-
     public function getAuthorsAsSentence($version = null) {
         if($version === null) {
             $version = $this->getLatestVersion();
@@ -320,7 +303,6 @@ class Package {
      *
      * @return void
      */
-
     public function load() {
         if($this->loaded) { return; }
         $data = $this->loader->getPackageDetails($this->name);
@@ -334,7 +316,6 @@ class Package {
      * @param array $data
      * @return void
      */
-
     public function fillFromArray(array $data) {
         if(isset($data['description'])) { $this->description = $data['description']; }
         if(isset($data['time'])) { $this->time = new Carbon($data['time']); }

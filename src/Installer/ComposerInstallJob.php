@@ -55,7 +55,6 @@ class ComposerInstallJob {
      * @param Dispatcher $events
      * @param LaravelApplication $app
      */
-
     public function __construct(Filesystem $filesystem, Repository $repository, Dispatcher $events, LaravelApplication $app) {
         $this->files = $filesystem;
         $this->config = $repository;
@@ -70,7 +69,6 @@ class ComposerInstallJob {
      * @param array $data
      * @throws \Exception
      */
-
     public function fire($job, $data) {
         echo 'Running: Oxygen\Marketplace\Installer\ComposerInstallJob' . "\n";
 

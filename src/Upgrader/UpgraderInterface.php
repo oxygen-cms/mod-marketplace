@@ -12,7 +12,6 @@ interface UpgraderInterface {
      * @param Package $package
      * @return void
      */
-
     public function upgrade(Package $package);
 
 }

@@ -34,7 +34,6 @@ class PackagistLoader implements LoaderInterface {
      *
      * @param Client $client
      */
-
     public function __construct(Client $client, CacheManager $cache) {
         $this->client = $client;
         $this->cache = $cache;
@@ -47,7 +46,6 @@ class PackagistLoader implements LoaderInterface {
      * @return array
      * @throws LoadingException If the request cannot be made
      */
-
     public function search(array $filters = []) {
         try {
             return $this->cache->remember('marketplace.search.' . http_build_query($filters), 60, function() use($filters) {
@@ -69,7 +67,6 @@ class PackagistLoader implements LoaderInterface {
      * @throws NotFoundHttpException if the package doesn't exist
      * @throws LoadingException if the package couldn't be loaded
      */
-
     public function getPackageDetails($packages) {
         $key = 'marketplace.details.' . implode('|', (array) $packages);
         return $this->cache->remember($key, 10, function() use($packages) {
@@ -134,7 +131,6 @@ class PackagistLoader implements LoaderInterface {
      * @param $package
      * @return string
      */
-
     public function getPackageDetailsUrl($package) {
         return 'packages/' . $package . '.json';
     }
@@ -146,7 +142,6 @@ class PackagistLoader implements LoaderInterface {
      * @param string $filename
      * @return string
      */
-
     public function getUrl(Package $package, $filename) {
         $base = str_replace('//github.com', '//raw.github.com', $package->repository);
         $base = str_replace('git://', 'https://', $base);
@@ -162,7 +157,6 @@ class PackagistLoader implements LoaderInterface {
      * @return string
      * @throws LoadingException If the request cannot be made
      */
-
     public function getFileContents(Package $package, $filename) {
         try {
             return $this->client->get($this->getUrl($package, $filename))->getBody()->getContents();
@@ -178,7 +172,6 @@ class PackagistLoader implements LoaderInterface {
      * @return string
      * @throws LoadingException If the request cannot be made
      */
-
     public function getReadme(Package $package) {
         if($package->readme !== null) {
             $readme = $package->readme;
@@ -202,7 +195,6 @@ class PackagistLoader implements LoaderInterface {
      * @return string
      * @throws LoadingException If the request cannot be made
      */
-
     public function getIcon(Package $package) {
         if($this->isGithubRepository($package->repository)) {
             return $this->getGithubIcon(explode('/', $this->getGithubPackage($package->repository))[0]);

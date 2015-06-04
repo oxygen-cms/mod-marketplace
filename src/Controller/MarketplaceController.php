@@ -28,7 +28,6 @@ class MarketplaceController extends BlueprintController {
      *
      * @param BlueprintManager        $manager
      */
-
     public function __construct(BlueprintManager $manager) {
         parent::__construct($manager, 'Marketplace');
     }
@@ -38,7 +37,6 @@ class MarketplaceController extends BlueprintController {
      *
      * @return Response
      */
-
     public function getHome() {
         try {
             $results = Marketplace::search($this->getFilters(Input::all()));
@@ -102,7 +100,6 @@ class MarketplaceController extends BlueprintController {
      * @param string $package
      * @return Response
      */
-
     public function getDetails($vendor, $package) {
         $name = $vendor . '/' . $package;
 
@@ -128,7 +125,6 @@ class MarketplaceController extends BlueprintController {
      * @param string $version
      * @return Response
      */
-
     public function postRequire($vendor, $package, $version = '*') {
         $name = $vendor . '/' . $package;
 
@@ -155,7 +151,6 @@ class MarketplaceController extends BlueprintController {
      *
      * @return Response
      */
-
     public function postInstall() {
         $sentRequest = Marketplace::getInstaller()->install();
         $route = $this->blueprint->getRouteName('getInstallProgress');
@@ -175,7 +170,6 @@ class MarketplaceController extends BlueprintController {
      *
      * @return Response
      */
-
     public function getInstallProgress() {
         return View::make('oxygen/marketplace::installProgress', [
             'title' => Lang::get('oxygen/marketplace::ui.installProgress.title')
@@ -187,7 +181,6 @@ class MarketplaceController extends BlueprintController {
      *
      * @return string
      */
-
     public function postInstallProgress() {
         $response = Marketplace::getInstaller()->getInstallProgress();
 
@@ -210,7 +203,6 @@ class MarketplaceController extends BlueprintController {
      *
      * @return string
      */
-
     public function deleteInstallProgress() {
         Marketplace::getInstaller()->clearInstallProgress();
 
@@ -225,7 +217,6 @@ class MarketplaceController extends BlueprintController {
      *
      * @return Response
      */
-
     public function getInstalled() {
         $installed = Marketplace::getInstalledPackages($this->getFilters(Input::all()));
         $page = (int) Input::get('page', 1) - 1;
@@ -244,7 +235,6 @@ class MarketplaceController extends BlueprintController {
      *
      * @return Response
      */
-
     public function postToggleProvider($provider) {
         $repository = Marketplace::getProviderRepository();
 

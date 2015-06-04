@@ -11,7 +11,6 @@ class ProviderRepository {
      *
      * @var array
      */
-
     public $coreProviders = [
         'Illuminate\\Auth\\AuthServiceProvider',
         'Illuminate\\Cache\\CacheServiceProvider',
@@ -56,7 +55,6 @@ class ProviderRepository {
      *
      * @param Repository $repository
      */
-
     public function __construct(Repository $repository) {
         $this->config = $repository;
     }
@@ -67,7 +65,6 @@ class ProviderRepository {
      * @param $provider
      * @return boolean
      */
-
     public function isEnabled($provider) {
         return count(array_filter($this->getProviders(), function($value) use($provider) {
             return $value === $provider;
@@ -80,7 +77,6 @@ class ProviderRepository {
      * @param $provider
      * @return boolean
      */
-
     public function isCore($provider) {
         return in_array($provider, $this->coreProviders);
     }
@@ -90,7 +86,6 @@ class ProviderRepository {
      *
      * @param $provider
      */
-
     public function enable($provider) {
         if($this->isEnabled($provider)) { return; }
         $providers = $this->getProviders();
@@ -103,7 +98,6 @@ class ProviderRepository {
      *
      * @param $provider
      */
-
     public function disable($provider) {
         $providers = array_filter($this->getProviders(), function($value) use($provider) {
             return $value !== $provider;

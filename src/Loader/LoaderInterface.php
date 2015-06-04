@@ -13,7 +13,6 @@ interface LoaderInterface {
      * @return array
      * @throws LoadingException If the search results can't be loaded.
      */
-
     public function search(array $filters = []);
 
     /**
@@ -22,7 +21,6 @@ interface LoaderInterface {
      * @param string|array $packages
      * @return array
      */
-
     public function getPackageDetails($packages);
 
     /**
@@ -32,7 +30,6 @@ interface LoaderInterface {
      * @param string $filename
      * @return string
      */
-
     public function getUrl(Package $package, $filename);
 
     /**
@@ -42,7 +39,6 @@ interface LoaderInterface {
      * @param string $filename
      * @return string
      */
-
     public function getFileContents(Package $package, $filename);
 
     /**
@@ -52,7 +48,6 @@ interface LoaderInterface {
      * @return string
      * @throws LoadingException If the request cannot be made
      */
-
     public function getReadme(Package $package);
 
 }

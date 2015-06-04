@@ -13,7 +13,6 @@ class MigrationListener {
      *
      * @param Application $application
      */
-
     public function __construct(Application $application) {
         $this->app = $application;
     }
@@ -24,7 +23,6 @@ class MigrationListener {
      * @param ProgressInterface $progress
      * @param OutputInterface   $output
      */
-
     public function handle($progress, $output) {
         $progress->section('Running Migrations');
 

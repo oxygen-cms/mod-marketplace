@@ -72,7 +72,6 @@ class ComposerInstaller implements InstallerInterface {
      * @param string $composerFilename path to the composer.json file
      * @param string $installedFilename path to the installed.json file
      */
-
     public function __construct(Filesystem $files, QueueManager $queue, Repository $config, $composerFilename, $installedFilename) {
         $this->files = $files;
         $this->queue = $queue;
@@ -88,7 +87,6 @@ class ComposerInstaller implements InstallerInterface {
      * @param string $version
      * @return void
      */
-
     public function add($package, $version) {
         $composer = $this->getComposer();
         if(!isset($composer['require'])) {
@@ -104,7 +102,6 @@ class ComposerInstaller implements InstallerInterface {
      * @param string $package
      * @return void|boolean
      */
-
     public function remove($package) {
         $composer = $this->getComposer();
         if(!isset($composer['require'][$package])) {
@@ -120,7 +117,6 @@ class ComposerInstaller implements InstallerInterface {
      * @param string $package
      * @return boolean
      */
-
     public function isRequired($package) {
         $composer = $this->getComposer();
         return isset($composer['require'][$package]);
@@ -132,7 +128,6 @@ class ComposerInstaller implements InstallerInterface {
      * @param string $name
      * @return boolean
      */
-
     public function isInstalled($name) {
         $installed = $this->getInstalledPackages();
         $filtered = array_filter($installed, function($package) use($name) {
@@ -147,7 +142,6 @@ class ComposerInstaller implements InstallerInterface {
      * @param string $name
      * @return string
      */
-
     public function getStatus($name) {
         $required = $this->isRequired($name);
         $installed = $this->isInstalled($name);
@@ -166,7 +160,6 @@ class ComposerInstaller implements InstallerInterface {
      *
      * @return boolean
      */
-
     public function install() {
         if(!$this->isInstalling()) {
             $this->queue->push('Oxygen\Marketplace\Installer\ComposerInstallJob');
@@ -181,7 +174,6 @@ class ComposerInstaller implements InstallerInterface {
      *
      * @return boolean
      */
-
     public function isInstalling() {
         return
             $this->files->exists($this->config->get('oxygen/marketplace::config.install.progress')) &&
@@ -193,7 +185,6 @@ class ComposerInstaller implements InstallerInterface {
      *
      * @return array
      */
-
     public function getInstallProgress() {
         if(!$this->hasInstallProgress()) {
             return false;
@@ -213,7 +204,6 @@ class ComposerInstaller implements InstallerInterface {
      *
      * @return void
      */
-
     public function clearInstallProgress() {
         $files = [
             $this->config->get('oxygen/marketplace::config.install.log'),
@@ -230,7 +220,6 @@ class ComposerInstaller implements InstallerInterface {
      *
      * @return boolean
      */
-
     public function hasInstallProgress() {
         $log = $this->config->get('oxygen/marketplace::config.install.log');
         $progress = $this->config->get('oxygen/marketplace::config.install.progress');
@@ -272,7 +261,6 @@ class ComposerInstaller implements InstallerInterface {
      *
      * @return array
      */
-
     public function getInstalledPackages() {
         if($this->installedFileContents === null) {
             $this->installedFileContents = json_decode($this->files->get($this->installedFilename), true);

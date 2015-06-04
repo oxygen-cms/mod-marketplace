@@ -13,7 +13,6 @@ class PublishAssetsListener {
      *
      * @param Application $application
      */
-
     public function __construct(Application $application) {
         $this->app = $application;
     }
@@ -24,7 +23,6 @@ class PublishAssetsListener {
      * @param ProgressInterface $progress
      * @param OutputInterface   $output
      */
-
     public function handle($progress, $output) {
         $this->progress = $progress;
 
