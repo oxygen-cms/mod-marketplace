@@ -80,6 +80,7 @@ class MarketplaceServiceProvider extends ServiceProvider {
 
         $this->app['events']->listen('oxygen.marketplace.postUpdate', 'Oxygen\Marketplace\Events\MigrationListener');
         $this->app['events']->listen('oxygen.marketplace.postUpdate', 'Oxygen\Marketplace\Events\PublishAssetsListener');
+        $this->app['events']->listen('oxygen.marketplace.postUpdate', 'Oxygen\Data\Schema\SchemaUpdateListener');
 	}
 
 	/**
