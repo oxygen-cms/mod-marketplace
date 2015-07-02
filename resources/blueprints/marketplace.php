@@ -162,9 +162,6 @@ Blueprint::make('Marketplace', function($blueprint) {
         if($repository->isEnabled($arguments['provider'])) {
             $item->icon = 'power-off';
             $item->label = 'Disable';
-            if($repository->isCore($arguments['provider'])) {
-                $item->dialog = new Dialog(Lang::get('oxygen/mod-marketplace::dialogs.disableCoreProvider'));
-            }
         }
     });
 

@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 
 use Oxygen\Core\Blueprint\BlueprintManager;
 use Oxygen\Core\Html\Navigation\Navigation;
+use Oxygen\Preferences\PreferenceNotFoundException;
 use OxygenModule\Marketplace\Events\MigrationListener;
 use OxygenModule\Marketplace\Events\PublishAssetsListener;
 use OxygenModule\Marketplace\Events\SchemaUpdateListener;
@@ -47,6 +48,17 @@ class MarketplaceServiceProvider extends ServiceProvider {
 		$this->app[PreferencesManager::class]->loadDirectory(__DIR__ . '/../resources/preferences');
 
 		$this->addNavigationItems();
+
+        /// Register the custom providers
+        try {
+            $providers = $this->app[PreferencesManager::class]->get('providers::list');
+            foreach($providers as $provider) {
+                $this->app->register($provider);
+            }
+        } catch(PreferenceNotFoundException $e) {
+
+        }
+
 	}
 
 	/**

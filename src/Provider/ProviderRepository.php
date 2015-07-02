@@ -2,59 +2,24 @@
 
 namespace OxygenModule\Marketplace\Provider;
 
-use Oxygen\Core\Config\Repository;
+use Oxygen\Preferences\PreferencesManager;
 
 class ProviderRepository {
 
     /**
-     * Core providers that should not be disabled.
+     * Preferences Repository
      *
-     * @var array
+     * @var PreferencesManager
      */
-    public $coreProviders = [
-        'Illuminate\\Auth\\AuthServiceProvider',
-        'Illuminate\\Cache\\CacheServiceProvider',
-        'Illuminate\\Session\\CommandsServiceProvider',
-        'Illuminate\\Routing\\ControllerServiceProvider',
-        'Illuminate\\Cookie\\CookieServiceProvider',
-        'Illuminate\\Database\\DatabaseServiceProvider',
-        'Illuminate\\Encryption\\EncryptionServiceProvider',
-        'Illuminate\\Filesystem\\FilesystemServiceProvider',
-        'Illuminate\\Hashing\\HashServiceProvider',
-        'Illuminate\\Html\\HtmlServiceProvider',
-        'Illuminate\\Log\\LogServiceProvider',
-        'Illuminate\\Database\\MigrationServiceProvider',
-        'Illuminate\\Pagination\\PaginationServiceProvider',
-        'Illuminate\\Queue\\QueueServiceProvider',
-        'Illuminate\\Auth\\Reminders\\ReminderServiceProvider',
-        'Illuminate\\Database\\SeedServiceProvider',
-        'Illuminate\\Session\\SessionServiceProvider',
-        'Oxygen\\Core\\Translation\\TranslationServiceProvider',
-        'Oxygen\\Core\\Validation\\ValidationServiceProvider',
-        'Illuminate\\View\\ViewServiceProvider',
-        'Illuminate\\Workbench\\WorkbenchServiceProvider',
-        'Oxygen\\Core\\View\\ViewServiceProvider',
-        'Oxygen\\Core\\CoreServiceProvider',
-        'Oxygen\\Core\\Routing\\RoutingServiceProvider',
-        'Oxygen\\Core\\Console\\ConsoleServiceProvider',
-        'Oxygen\\Marketplace\\MarketplaceServiceProvider',
-    ];
-
-    /**
-     * Config Repository
-     *
-     * @var Repository
-     */
-
-    protected $config;
+    protected $preferences;
 
     /**
      * Constructor.
      *
-     * @param Repository $repository
+     * @param PreferencesManager $repository
      */
-    public function __construct(Repository $repository) {
-        $this->config = $repository;
+    public function __construct(PreferencesManager $repository) {
+        $this->preferences = $repository;
     }
 
     /**
@@ -67,16 +32,6 @@ class ProviderRepository {
         return count(array_filter($this->getProviders(), function($value) use($provider) {
             return $value === $provider;
         })) > 0;
-    }
-
-    /**
-     * Determines whether the given provider is already enabled.
-     *
-     * @param $provider
-     * @return boolean
-     */
-    public function isCore($provider) {
-        return in_array($provider, $this->coreProviders);
     }
 
     /**
@@ -110,7 +65,7 @@ class ProviderRepository {
      */
 
     protected function getProviders() {
-        return $this->config->get('app.providers');
+        return $this->preferences->get('providers::list');
     }
 
     /**
@@ -120,7 +75,9 @@ class ProviderRepository {
      */
 
     protected function updateProviders(array $providers) {
-        $this->config->write('app.providers', $providers);
+        $schema = $this->preferences->getSchema('providers');
+        $schema->getRepository()->set('list', $providers);
+        $schema->storeRepository();
     }
 
 }
