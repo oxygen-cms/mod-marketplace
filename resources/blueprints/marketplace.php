@@ -3,9 +3,9 @@
 use Oxygen\Core\Form\FieldMetadata;
 use Oxygen\Core\Html\Dialog\Dialog;
 use Oxygen\Core\Html\Toolbar\Factory\FormToolbarItemFactory;
-    use OxygenModule\Marketplace\Controller\MarketplaceController;
+use OxygenModule\Marketplace\Controller\MarketplaceController;
 
-    Blueprint::make('Marketplace', function($blueprint) {
+Blueprint::make('Marketplace', function($blueprint) {
     $blueprint->setController(MarketplaceController::class);
     $blueprint->setDisplayName('Marketplace', Blueprint::PLURAL);
     $blueprint->setIcon('cloud');
@@ -167,47 +167,5 @@ use Oxygen\Core\Html\Toolbar\Factory\FormToolbarItemFactory;
             }
         }
     });
-
-    $blueprint->makeFields([
-        [
-            'name'              => 'q',
-            'label'             => 'Query',
-            'type'              => 'search',
-            'placeholder'       => 'Search for Packages',
-            'editable'          => true
-        ],
-        [
-            'name'              => 'scope',
-            'label'             => 'Scope',
-            'type'              => 'radio',
-            'editable'          => true,
-            'options'           => [
-                'oxygen' => 'Only Oxygen Packages',
-                'all'    => 'All Composer Packages'
-            ]
-        ],
-        [
-            'name'              => 'tags',
-            'label'             => 'Tags',
-            'type'              => 'tags',
-            'placeholder'       => 'Find by Tag',
-            'editable'          => true
-        ],
-        [
-            'name'              => 'type',
-            'label'             => 'Type',
-            'type'              => 'text',
-            'placeholder'       => 'Package Type',
-            'editable'          => true,
-            'datalist'          => [
-                'library',
-                'symfony-bundle',
-                'wordpress-plugin',
-                'project',
-                'metapackage',
-                'composer-plugin'
-            ]
-        ]
-    ]);
 
 });

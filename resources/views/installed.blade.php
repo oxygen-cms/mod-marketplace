@@ -28,7 +28,7 @@
     </div>
 
     <div class="Row--layout Row--alignTop">
-        @include('oxygen/mod-marketplace::filters', ['exclude' => ['q']])
+        @include('oxygen/mod-marketplace::filters', ['fields' => $fields, 'exclude' => ['q']])
         <div class="Cell-twoThirds Cell--last Block">
             @if(empty($installed))
                 <div class="Row--visual">

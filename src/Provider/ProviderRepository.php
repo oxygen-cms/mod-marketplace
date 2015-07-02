@@ -37,9 +37,7 @@ class ProviderRepository {
         'Oxygen\\Core\\CoreServiceProvider',
         'Oxygen\\Core\\Routing\\RoutingServiceProvider',
         'Oxygen\\Core\\Console\\ConsoleServiceProvider',
-        'Oxygen\\Core\\Config\\ConfigServiceProvider',
         'Oxygen\\Marketplace\\MarketplaceServiceProvider',
-        'Foo\\Bar\\BazServiceProvider'
     ];
 
     /**

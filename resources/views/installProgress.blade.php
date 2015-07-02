@@ -24,15 +24,10 @@
 
 <div class="Block">
     <?php
-        echo Form::open([
-            'id' => 'progressForm',
-            'route' => $blueprint->getRouteName('postInstallProgress'),
-            'method' => 'POST']
-        );
+        $form = new Form($blueprint->getRouteName());
+        $form->setId('progressForm');
 
-        echo Form::token();
-
-        echo Form::close();
+        echo $form->render();
     ?>
     <div class="Row--visual">
         <div class="ProgressBar" id="install-progress"><span class="ProgressBar-fill" style="width: 100%;"></span></div>

@@ -9,14 +9,14 @@ use Input;
 use File;
 use Config;
 use Lang;
-use Oxygen\Core\Config\RewriteException;
+use OxygenModule\Marketplace\SearchQueryFieldSet;
 use Paginator;
 use Redirect;
 use Validator;
 use View;
 use Response;
 
-use Oxygen\Core\Blueprint\Manager as BlueprintManager;
+use Oxygen\Core\Blueprint\BlueprintManager;
 use Oxygen\Core\Controller\BlueprintController;
 use Oxygen\Core\Http\Notification;
 use OxygenModule\Marketplace\Loader\LoadingException;
@@ -24,12 +24,20 @@ use OxygenModule\Marketplace\Loader\LoadingException;
 class MarketplaceController extends BlueprintController {
 
     /**
+     * @var \OxygenModule\Marketplace\SearchQueryFieldSet
+     */
+    private $searchFields;
+
+    /**
      * Constructs the PagesController.
      *
-     * @param BlueprintManager        $manager
+     * @param BlueprintManager                              $manager
+     * @param \OxygenModule\Marketplace\SearchQueryFieldSet $searchFields
+     * @throws \Oxygen\Core\Blueprint\BlueprintNotFoundException
      */
-    public function __construct(BlueprintManager $manager) {
-        parent::__construct($manager, 'Marketplace');
+    public function __construct(BlueprintManager $manager, SearchQueryFieldSet $searchFields) {
+        parent::__construct($manager->get('Marketplace'));
+        $this->searchFields = $searchFields;
     }
 
     /**
@@ -56,6 +64,7 @@ class MarketplaceController extends BlueprintController {
         return View::make('oxygen/mod-marketplace::home', [
             'results' => $results,
             'paginator' => $paginator,
+            'fields' => $this->searchFields,
             'title' => Lang::get('oxygen/mod-marketplace::ui.home.title')
         ]);
     }
@@ -226,6 +235,7 @@ class MarketplaceController extends BlueprintController {
         return View::make('oxygen/mod-marketplace::installed', [
             'installed' => $chunk,
             'paginator' => $paginator,
+            'fields' => $this->searchFields,
             'title' => Lang::get('oxygen/mod-marketplace::ui.installed.title')
         ]);
     }
