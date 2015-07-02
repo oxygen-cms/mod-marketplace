@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxygen\Marketplace\Installer;
+namespace OxygenModule\Marketplace\Installer;
 
 interface InstallerInterface {
 

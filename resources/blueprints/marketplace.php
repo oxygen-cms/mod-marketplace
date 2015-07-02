@@ -3,9 +3,10 @@
 use Oxygen\Core\Form\FieldMetadata;
 use Oxygen\Core\Html\Dialog\Dialog;
 use Oxygen\Core\Html\Toolbar\Factory\FormToolbarItemFactory;
+    use OxygenModule\Marketplace\Controller\MarketplaceController;
 
-Blueprint::make('Marketplace', function($blueprint) {
-    $blueprint->setController('Oxygen\Marketplace\Controller\MarketplaceController');
+    Blueprint::make('Marketplace', function($blueprint) {
+    $blueprint->setController(MarketplaceController::class);
     $blueprint->setDisplayName('Marketplace', Blueprint::PLURAL);
     $blueprint->setIcon('cloud');
 
@@ -49,7 +50,7 @@ Blueprint::make('Marketplace', function($blueprint) {
         'label' => 'Run Installer',
         'icon' => 'download',
         'color' => 'green',
-        'dialog' => new Dialog(Lang::get('oxygen/marketplace::dialogs.runInstaller'))
+        'dialog' => new Dialog(Lang::get('oxygen/mod-marketplace::dialogs.runInstaller'))
     ])->addDynamicCallback(function($item, $arguments) {
         $installer = Marketplace::getInstaller();
         if($installer->isInstalling()) {
@@ -162,7 +163,7 @@ Blueprint::make('Marketplace', function($blueprint) {
             $item->icon = 'power-off';
             $item->label = 'Disable';
             if($repository->isCore($arguments['provider'])) {
-                $item->dialog = new Dialog(Lang::get('oxygen/marketplace::dialogs.disableCoreProvider'));
+                $item->dialog = new Dialog(Lang::get('oxygen/mod-marketplace::dialogs.disableCoreProvider'));
             }
         }
     });

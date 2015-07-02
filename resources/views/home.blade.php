@@ -8,7 +8,7 @@
 
     $header = Header::fromBlueprint(
         $blueprint,
-        Lang::get('oxygen/marketplace::ui.home.title')
+        Lang::get('oxygen/mod-marketplace::ui.home.title')
     );
 
 ?>
@@ -18,7 +18,7 @@
 </div>
 
 <div class="Row--layout Row--alignTop">
-    @include('oxygen/marketplace::filters')
+    @include('oxygen/mod-marketplace::filters')
     <div class="Cell-twoThirds Cell--last Row--layout">
         @if(empty($results['results']))
             <h2 class="heading-gamma">No results</h2>

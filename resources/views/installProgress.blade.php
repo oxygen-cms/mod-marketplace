@@ -11,7 +11,7 @@
 
     $header = Header::fromBlueprint(
         $blueprint,
-        Lang::get('oxygen/marketplace::ui.installProgress.title')
+        Lang::get('oxygen/mod-marketplace::ui.installProgress.title')
     );
 
     $header->setBackLink(URL::route($blueprint->getRouteName('getHome')));

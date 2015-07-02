@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxygen\Marketplace\Loader;
+namespace OxygenModule\Marketplace\Loader;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Event\CompleteEvent;
@@ -9,7 +9,7 @@ use GuzzleHttp\Pool;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Cache\CacheManager;
 
-use Oxygen\Marketplace\Package\Package;
+use OxygenModule\Marketplace\Package\Package;
 
 class PackagistLoader implements LoaderInterface {
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Oxygen\Marketplace\Package;
+namespace OxygenModule\Marketplace\Package;
 
 use Michelf\MarkdownExtra;
 use Carbon\Carbon;
 
-use Oxygen\Marketplace\Loader\LoaderInterface;
-use Oxygen\Marketplace\Loader\LoadingException;
+use OxygenModule\Marketplace\Loader\LoaderInterface;
+use OxygenModule\Marketplace\Loader\LoadingException;
 
 class Package {
 

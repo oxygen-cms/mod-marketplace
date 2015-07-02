@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxygen\Marketplace\Controller;
+namespace OxygenModule\Marketplace\Controller;
 
 use App;
 use Exception;
@@ -19,7 +19,7 @@ use Response;
 use Oxygen\Core\Blueprint\Manager as BlueprintManager;
 use Oxygen\Core\Controller\BlueprintController;
 use Oxygen\Core\Http\Notification;
-use Oxygen\Marketplace\Loader\LoadingException;
+use OxygenModule\Marketplace\Loader\LoadingException;
 
 class MarketplaceController extends BlueprintController {
 
@@ -41,9 +41,9 @@ class MarketplaceController extends BlueprintController {
         try {
             $results = Marketplace::search($this->getFilters(Input::all()));
         } catch(LoadingException $e) {
-            return View::make('oxygen/marketplace::error', [
+            return View::make('oxygen/mod-marketplace::error', [
                 'exception' => $e,
-                'title' => Lang::get('oxygen/marketplace::ui.error.title')
+                'title' => Lang::get('oxygen/mod-marketplace::ui.error.title')
             ]);
         }
 
@@ -53,10 +53,10 @@ class MarketplaceController extends BlueprintController {
             $paginator = null;
         }
 
-        return View::make('oxygen/marketplace::home', [
+        return View::make('oxygen/mod-marketplace::home', [
             'results' => $results,
             'paginator' => $paginator,
-            'title' => Lang::get('oxygen/marketplace::ui.home.title')
+            'title' => Lang::get('oxygen/mod-marketplace::ui.home.title')
         ]);
     }
 
@@ -69,9 +69,9 @@ class MarketplaceController extends BlueprintController {
 
     protected function getFilters($input) {
         if(!isset($input['scope'])) {
-            $input['scope'] = Config::get('oxygen/marketplace::defaultScope');
+            $input['scope'] = Config::get('oxygen/mod-marketplace::defaultScope');
         }
-        $scope = Config::get('oxygen/marketplace::scope.' . $input['scope']);
+        $scope = Config::get('oxygen/mod-marketplace::scope.' . $input['scope']);
         unset($input['scope']);
 
         if(isset($scope['q'])) {
@@ -106,14 +106,14 @@ class MarketplaceController extends BlueprintController {
         try {
             $package = Marketplace::get($name);
         } catch(LoadingException $e) {
-            return View::make('oxygen/marketplace::error', [
+            return View::make('oxygen/mod-marketplace::error', [
                 'exception' => $e
             ]);
         }
 
-        return View::make('oxygen/marketplace::view', [
+        return View::make('oxygen/mod-marketplace::view', [
             'package' => $package,
-            'title' => Lang::get('oxygen/marketplace::ui.view.title', ['name' => $package->getPrettyName()])
+            'title' => Lang::get('oxygen/mod-marketplace::ui.view.title', ['name' => $package->getPrettyName()])
         ]);
     }
 
@@ -132,14 +132,14 @@ class MarketplaceController extends BlueprintController {
             Marketplace::getInstaller()->remove($name);
 
             return Response::notification(
-                new Notification(Lang::get('oxygen/marketplace::messages.removed')),
+                new Notification(Lang::get('oxygen/mod-marketplace::messages.removed')),
                 ['refresh' => true]
             );
         } else {
             Marketplace::getInstaller()->add($name, $version);
 
             return Response::notification(
-                new Notification(Lang::get('oxygen/marketplace::messages.added')),
+                new Notification(Lang::get('oxygen/mod-marketplace::messages.added')),
                 ['refresh' => true]
             );
         }
@@ -157,7 +157,7 @@ class MarketplaceController extends BlueprintController {
 
         if($sentRequest) {
             return Response::notification(
-                new Notification(Lang::get('oxygen/marketplace::messages.installRequestSent')),
+                new Notification(Lang::get('oxygen/mod-marketplace::messages.installRequestSent')),
                 ['redirect' => $route]
             );
         } else {
@@ -171,8 +171,8 @@ class MarketplaceController extends BlueprintController {
      * @return Response
      */
     public function getInstallProgress() {
-        return View::make('oxygen/marketplace::installProgress', [
-            'title' => Lang::get('oxygen/marketplace::ui.installProgress.title')
+        return View::make('oxygen/mod-marketplace::installProgress', [
+            'title' => Lang::get('oxygen/mod-marketplace::ui.installProgress.title')
         ]);
     }
 
@@ -187,7 +187,7 @@ class MarketplaceController extends BlueprintController {
         if($response === false) {
             return Response::json([
                 'progress' => false,
-                'notification' => ['status' => 'failed', 'content' => Lang::get('oxygen/marketplace::messages.logNotFound'), 'unique' => 'notStarted']
+                'notification' => ['status' => 'failed', 'content' => Lang::get('oxygen/mod-marketplace::messages.logNotFound'), 'unique' => 'notStarted']
             ]);
         }
 
@@ -207,7 +207,7 @@ class MarketplaceController extends BlueprintController {
         Marketplace::getInstaller()->clearInstallProgress();
 
         return Response::notification(
-            new Notification(Lang::get('oxygen/marketplace::messages.logCleared')),
+            new Notification(Lang::get('oxygen/mod-marketplace::messages.logCleared')),
             ['refresh' => true]
         );
     }
@@ -223,10 +223,10 @@ class MarketplaceController extends BlueprintController {
         $chunk = array_chunk($installed, 30);
         $chunk = isset($chunk[$page]) ? $chunk[$page] : [];
         $paginator = empty($chunk) ? [] : Paginator::make($chunk, count($installed), 30);
-        return View::make('oxygen/marketplace::installed', [
+        return View::make('oxygen/mod-marketplace::installed', [
             'installed' => $chunk,
             'paginator' => $paginator,
-            'title' => Lang::get('oxygen/marketplace::ui.installed.title')
+            'title' => Lang::get('oxygen/mod-marketplace::ui.installed.title')
         ]);
     }
 
@@ -240,7 +240,7 @@ class MarketplaceController extends BlueprintController {
 
         if(!class_exists($provider)) {
             return Response::notification(
-                new Notification(Lang::get('oxygen/marketplace::messages.provider.classNotFound'), Notification::FAILED)
+                new Notification(Lang::get('oxygen/mod-marketplace::messages.provider.classNotFound'), Notification::FAILED)
             );
         }
 
@@ -248,12 +248,12 @@ class MarketplaceController extends BlueprintController {
             $object = new $provider(App::make('app'));
             if(!is_subclass_of($object, 'Illuminate\Support\ServiceProvider')) {
                 return Response::notification(
-                    new Notification(Lang::get('oxygen/marketplace::messages.provider.invalid'), Notification::FAILED)
+                    new Notification(Lang::get('oxygen/mod-marketplace::messages.provider.invalid'), Notification::FAILED)
                 );
             }
         } catch(Exception $e) {
             return Response::notification(
-                new Notification(Lang::get('oxygen/marketplace::messages.provider.invalid'), Notification::FAILED)
+                new Notification(Lang::get('oxygen/mod-marketplace::messages.provider.invalid'), Notification::FAILED)
             );
         }
 
@@ -261,8 +261,8 @@ class MarketplaceController extends BlueprintController {
 
         return Response::notification(new Notification(
             $repository->isEnabled($provider)
-                ? Lang::get('oxygen/marketplace::messages.provider.enabled')
-                : Lang::get('oxygen/marketplace::messages.provider.disabled')
+                ? Lang::get('oxygen/mod-marketplace::messages.provider.enabled')
+                : Lang::get('oxygen/mod-marketplace::messages.provider.disabled')
         ), ['refresh' => true]);
     }
 

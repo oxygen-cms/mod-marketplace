@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxygen\Marketplace\Loader;
+namespace OxygenModule\Marketplace\Loader;
 
 use Exception;
 

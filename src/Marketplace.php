@@ -1,12 +1,12 @@
 <?php
 
-namespace Oxygen\Marketplace;
+namespace OxygenModule\Marketplace;
 
-use Oxygen\Marketplace\Loader\LoaderInterface;
-use Oxygen\Marketplace\Installer\InstallerInterface;
-use Oxygen\Marketplace\Package\Package;
-use Oxygen\Marketplace\Provider\ProviderRepository;
-use Oxygen\Marketplace\Upgrader\UpgraderInterface;
+use OxygenModule\Marketplace\Loader\LoaderInterface;
+use OxygenModule\Marketplace\Installer\InstallerInterface;
+use OxygenModule\Marketplace\Package\Package;
+use OxygenModule\Marketplace\Provider\ProviderRepository;
+use OxygenModule\Marketplace\Upgrader\UpgraderInterface;
 
 class Marketplace {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxygen\Marketplace\Events;
+namespace OxygenModule\Marketplace\Events;
 
 use Composer\Progress\ProgressInterface;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;

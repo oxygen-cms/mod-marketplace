@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxygen\Marketplace\Installer;
+namespace OxygenModule\Marketplace\Installer;
 
 use Composer\Progress\FileProgress;
 use Exception;
@@ -70,15 +70,15 @@ class ComposerInstallJob {
      * @throws \Exception
      */
     public function fire($job, $data) {
-        echo 'Running: Oxygen\Marketplace\Installer\ComposerInstallJob' . "\n";
+        echo 'Running: OxygenModule\Marketplace\Installer\ComposerInstallJob' . "\n";
 
         // Composer\Factory::getHomeDir() method
         // needs COMPOSER_HOME environment variable set
         putenv('COMPOSER=' . base_path() . '/composer.json');
         putenv('COMPOSER_HOME=' . base_path() . '/.composer');
 
-        $log = $this->config->get('oxygen/marketplace::config.install.log');
-        $progress = $this->config->get('oxygen/marketplace::config.install.progress');
+        $log = $this->config->get('oxygen/mod-marketplace::config.install.log');
+        $progress = $this->config->get('oxygen/mod-marketplace::config.install.progress');
         foreach([$log, $progress] as $file) {
             $this->files->delete($file);
             if(!$this->files->exists(dirname($file))) {
@@ -86,7 +86,7 @@ class ComposerInstallJob {
             }
         }
 
-        $input = new ArrayInput($this->config->get('oxygen/marketplace::config.install.command'));
+        $input = new ArrayInput($this->config->get('oxygen/mod-marketplace::config.install.command'));
         $this->output = new StreamOutput(fopen($log, 'a', false), OutputInterface::VERBOSITY_DEBUG);
         $this->progress = new FileProgress($progress, $this->output);
         $this->progress->section('Beginning Installation');

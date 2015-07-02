@@ -1,5 +1,5 @@
 {
-    "name": "oxygen/marketplace",
+    "name": "oxygen/mod-marketplace",
     "description": "A Marketplace for Oxygen",
     "license": "MIT",
     "keywords": [
@@ -14,32 +14,28 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "oxygen/core": "~0.2.0",
-        "composer/composer": "@dev",
-        "illuminate/support": "4.2.*"
-    },
-    "require": {
-        "php": ">=5.4.0",
-        "illuminate/support": "4.2.*",
+        "php": ">=5.5.9",
+        "oxygen/core": "dev-master",
+        "oxygen/preferences": "dev-master",
+        "illuminate/support": "~5.1.0",
         "michelf/php-markdown": "~1.4",
         "composer/composer": "dev-master",
         "guzzlehttp/guzzle": "~5.0"
     },
     "autoload": {
         "psr-4": {
-            "Oxygen\\Marketplace\\": "src/"
+            "OxygenModule\\Marketplace\\": "src/"
         }
     },
     "extra": {
-        "title": "Oxygen Marketplace",
+        "title": "Oxygen Module - Marketplace",
         "readme": "oxygen.md",
         "changes": "changes.md",
         "icon": "icon.png",
         "providers": [
             {
                 "name": "Marketplace",
-                "class": "Oxygen\\Marketplace\\MarketplaceServiceProvider",
+                "class": "OxygenModule\\Marketplace\\MarketplaceServiceProvider",
                 "description": "Adds the Marketplace"
             }
         ]

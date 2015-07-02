@@ -1,9 +1,9 @@
 <?php
 
-namespace Oxygen\Marketplace\Upgrader;
+namespace OxygenModule\Marketplace\Upgrader;
 
 use Illuminate\Filesystem\Filesystem;
-use Oxygen\Marketplace\Package\Package;
+use OxygenModule\Marketplace\Package\Package;
 
 class FilesystemUpgrader implements UpgraderInterface {
 

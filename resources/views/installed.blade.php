@@ -8,7 +8,7 @@
 
     $header = Header::fromBlueprint(
             $blueprint,
-            Lang::get('oxygen/marketplace::ui.installed.title')
+            Lang::get('oxygen/mod-marketplace::ui.installed.title')
     );
 
     $header->setBackLink(URL::route($blueprint->getRouteName('getHome')));
@@ -28,7 +28,7 @@
     </div>
 
     <div class="Row--layout Row--alignTop">
-        @include('oxygen/marketplace::filters', ['exclude' => ['q']])
+        @include('oxygen/mod-marketplace::filters', ['exclude' => ['q']])
         <div class="Cell-twoThirds Cell--last Block">
             @if(empty($installed))
                 <div class="Row--visual">

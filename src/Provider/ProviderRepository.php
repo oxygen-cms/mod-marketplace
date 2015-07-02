@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxygen\Marketplace\Provider;
+namespace OxygenModule\Marketplace\Provider;
 
 use Oxygen\Core\Config\Repository;
 

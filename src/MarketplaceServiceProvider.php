@@ -1,14 +1,20 @@
 <?php
 
-namespace Oxygen\Marketplace;
+namespace OxygenModule\Marketplace;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
+
+use Oxygen\Core\Blueprint\BlueprintManager;
 use Oxygen\Core\Html\Navigation\Navigation;
-use Oxygen\Marketplace\Loader\PackagistLoader;
-use Oxygen\Marketplace\Installer\ComposerInstaller;
-use Oxygen\Marketplace\Provider\ProviderRepository;
-use Oxygen\Marketplace\Upgrader\FilesystemUpgrader;
+use OxygenModule\Marketplace\Events\MigrationListener;
+use OxygenModule\Marketplace\Events\PublishAssetsListener;
+use OxygenModule\Marketplace\Events\SchemaUpdateListener;
+use OxygenModule\Marketplace\Loader\PackagistLoader;
+use OxygenModule\Marketplace\Installer\ComposerInstaller;
+use OxygenModule\Marketplace\Provider\ProviderRepository;
+use OxygenModule\Marketplace\Upgrader\FilesystemUpgrader;
+use Oxygen\Preferences\PreferencesManager;
 
 class MarketplaceServiceProvider extends ServiceProvider {
 
@@ -27,10 +33,17 @@ class MarketplaceServiceProvider extends ServiceProvider {
 	 */
 
 	public function boot() {
-		$this->package('oxygen/marketplace', 'oxygen/marketplace', __DIR__ . '/../resources');
+        $this->mergeConfigFrom(__DIR__ . '/../resources/config/config.php', 'oxygen.mod-marketplace');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'oxygen/mod-marketplace');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'oxygen/mod-marketplace');
 
-		$this->app['oxygen.blueprintManager']->loadDirectory(__DIR__ . '/../resources/blueprints');
-		$this->app['oxygen.preferences']->loadDirectory(__DIR__ . '/../resources/preferences');
+        $this->publishes([
+            __DIR__ . '/../resources/lang' => base_path('resources/lang/vendor/oxygen/mod-auth'),
+            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/oxygen/mod-auth')
+        ]);
+
+		$this->app[BlueprintManager::class]->loadDirectory(__DIR__ . '/../resources/blueprints');
+		$this->app[PreferencesManager::class]->loadDirectory(__DIR__ . '/../resources/preferences');
 
 		$this->addNavigationItems();
 	}
@@ -40,11 +53,10 @@ class MarketplaceServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-
 	public function addNavigationItems() {
-		$blueprint = $this->app['oxygen.blueprintManager']->get('Marketplace');
+		$blueprint = $this->app[BlueprintManager::class]->get('Marketplace');
 
-		$this->app['oxygen.navigation']->add($blueprint->getToolbarItem('getHome'));
+		$this->app[Navigation::class]->add($blueprint->getToolbarItem('getHome'));
 	}
 
 	/**
@@ -54,7 +66,7 @@ class MarketplaceServiceProvider extends ServiceProvider {
 	 */
 
 	public function register() {
-		$this->app->bindShared(['oxygen.marketplace' => 'Oxygen\Marketplace\Marketplace'], function($app) {
+		$this->app->singleton(Marketplace::class, function($app) {
 	        return new Marketplace(
 	        	new PackagistLoader(
 					new Client(['base_url' => 'http://packagist.org/']),
@@ -78,9 +90,9 @@ class MarketplaceServiceProvider extends ServiceProvider {
 	        );
 	    });
 
-        $this->app['events']->listen('oxygen.marketplace.postUpdate', 'Oxygen\Marketplace\Events\MigrationListener');
-        $this->app['events']->listen('oxygen.marketplace.postUpdate', 'Oxygen\Marketplace\Events\PublishAssetsListener');
-        $this->app['events']->listen('oxygen.marketplace.postUpdate', 'Oxygen\Data\Schema\SchemaUpdateListener');
+        $this->app['events']->listen('oxygen.marketplace.postUpdate', MigrationListener::class);
+        $this->app['events']->listen('oxygen.marketplace.postUpdate', PublishAssetsListener::class);
+        $this->app['events']->listen('oxygen.marketplace.postUpdate', SchemaUpdateListener::class);
 	}
 
 	/**

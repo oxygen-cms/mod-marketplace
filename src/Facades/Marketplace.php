@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxygen\Marketplace\Facades;
+namespace OxygenModule\Marketplace\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

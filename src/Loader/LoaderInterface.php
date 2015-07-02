@@ -1,8 +1,8 @@
 <?php
 
-namespace Oxygen\Marketplace\Loader;
+namespace OxygenModule\Marketplace\Loader;
 
-use Oxygen\Marketplace\Package\Package;
+use OxygenModule\Marketplace\Package\Package;
 
 interface LoaderInterface {
 

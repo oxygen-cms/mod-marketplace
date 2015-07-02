@@ -8,7 +8,7 @@
 
     $header = Header::fromBlueprint(
         $blueprint,
-        Lang::get('oxygen/marketplace::ui.error.title')
+        Lang::get('oxygen/mod-marketplace::ui.error.title')
     );
 
 ?>

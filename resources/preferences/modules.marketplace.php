@@ -1,10 +1,11 @@
 <?php
 
-use Oxygen\Preferences\Loader\ConfigLoader;
+use Oxygen\Preferences\Loader\Database\PreferenceRepositoryInterface;
+use Oxygen\Preferences\Loader\DatabaseLoader;
 
 Preferences::register('modules.marketplace', function($schema) {
     $schema->setTitle('Marketplace');
-    $schema->setLoader(new ConfigLoader(App::make('config'), 'oxygen/marketplace::config'));
+    $schema->setLoader(new DatabaseLoader(app(PreferenceRepositoryInterface::class), 'modules.marketplace'));
 
     $schema->makeFields([
         '' => [
