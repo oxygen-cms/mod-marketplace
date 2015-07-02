@@ -58,7 +58,6 @@ class MarketplaceServiceProvider extends ServiceProvider {
         } catch(PreferenceNotFoundException $e) {
 
         }
-
 	}
 
 	/**
