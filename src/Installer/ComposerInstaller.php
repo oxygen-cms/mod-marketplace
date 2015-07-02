@@ -162,7 +162,7 @@ class ComposerInstaller implements InstallerInterface {
      */
     public function install() {
         if(!$this->isInstalling()) {
-            $this->queue->push('OxygenModule\Marketplace\Installer\ComposerInstallJob');
+            $this->queue->push(ComposerInstallJob::class);
             return true;
         } else {
             return false;
@@ -176,8 +176,8 @@ class ComposerInstaller implements InstallerInterface {
      */
     public function isInstalling() {
         return
-            $this->files->exists($this->config->get('oxygen/mod-marketplace::config.install.progress')) &&
-            $this->files->exists($this->config->get('oxygen/mod-marketplace::config.install.log'));
+            $this->files->exists($this->config->get('oxygen.mod-marketplace.install.progress')) &&
+            $this->files->exists($this->config->get('oxygen.mod-marketplace.install.log'));
     }
 
     /**
@@ -190,8 +190,8 @@ class ComposerInstaller implements InstallerInterface {
             return false;
         }
 
-        $log = $this->config->get('oxygen/mod-marketplace::config.install.log');
-        $progress = $this->config->get('oxygen/mod-marketplace::config.install.progress');
+        $log = $this->config->get('oxygen.mod-marketplace.install.log');
+        $progress = $this->config->get('oxygen.mod-marketplace.install.progress');
 
         $log = $this->files->get($log);
         $response = json_decode($this->files->get($progress), true);
@@ -206,8 +206,8 @@ class ComposerInstaller implements InstallerInterface {
      */
     public function clearInstallProgress() {
         $files = [
-            $this->config->get('oxygen/mod-marketplace::config.install.log'),
-            $this->config->get('oxygen/mod-marketplace::config.install.progress')
+            $this->config->get('oxygen.mod-marketplace.install.log'),
+            $this->config->get('oxygen.mod-marketplace.install.progress')
         ];
 
         foreach($files as $file) {
@@ -221,8 +221,8 @@ class ComposerInstaller implements InstallerInterface {
      * @return boolean
      */
     public function hasInstallProgress() {
-        $log = $this->config->get('oxygen/mod-marketplace::config.install.log');
-        $progress = $this->config->get('oxygen/mod-marketplace::config.install.progress');
+        $log = $this->config->get('oxygen.mod-marketplace.install.log');
+        $progress = $this->config->get('oxygen.mod-marketplace.install.progress');
         if(!$this->files->exists($log) || !$this->files->exists($progress)) {
             return false;
         } else {

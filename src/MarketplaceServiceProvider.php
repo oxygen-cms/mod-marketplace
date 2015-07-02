@@ -33,13 +33,14 @@ class MarketplaceServiceProvider extends ServiceProvider {
 	 */
 
 	public function boot() {
-        $this->mergeConfigFrom(__DIR__ . '/../resources/config/config.php', 'oxygen.mod-marketplace');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'oxygen.mod-marketplace');
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'oxygen/mod-marketplace');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'oxygen/mod-marketplace');
 
         $this->publishes([
-            __DIR__ . '/../resources/lang' => base_path('resources/lang/vendor/oxygen/mod-auth'),
-            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/oxygen/mod-auth')
+            __DIR__ . '/../resources/lang' => base_path('resources/lang/vendor/oxygen/mod-marketplace'),
+            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/oxygen/mod-marketplace'),
+            __DIR__ . '/../resources/config/config.php' => config_path('oxygen/mod-marketplace.php')
         ]);
 
 		$this->app[BlueprintManager::class]->loadDirectory(__DIR__ . '/../resources/blueprints');

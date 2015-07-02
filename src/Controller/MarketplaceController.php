@@ -78,9 +78,9 @@ class MarketplaceController extends BlueprintController {
 
     protected function getFilters($input) {
         if(!isset($input['scope'])) {
-            $input['scope'] = Config::get('oxygen/mod-marketplace::defaultScope');
+            $input['scope'] = Config::get('oxygen.mod-marketplace.defaultScope');
         }
-        $scope = Config::get('oxygen/mod-marketplace::scope.' . $input['scope']);
+        $scope = Config::get('oxygen.mod-marketplace.scope.' . $input['scope']);
         unset($input['scope']);
 
         if(isset($scope['q'])) {
