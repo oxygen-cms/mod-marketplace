@@ -1,4 +1,4 @@
-@extends(Config::get('oxygen/core::layout'))
+@extends(app('oxygen.layout'))
 
 @section('content')
 

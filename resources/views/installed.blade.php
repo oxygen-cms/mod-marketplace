@@ -1,4 +1,4 @@
-@extends(Config::get('oxygen/core::layout'))
+@extends(app('oxygen.layout'))
 
 @section('content')
 
@@ -64,7 +64,7 @@
     </div>
     @if(!empty($installed))
         <div class="Row">
-            {{ $paginator->links() }}
+            {{ $paginator->render() }}
         </div>
     @endif
 
