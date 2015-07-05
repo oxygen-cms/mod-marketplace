@@ -1,4 +1,4 @@
-# Oxygen - Marketplace
+# Oxygen Module - Marketplace
 
 This repository contains the Oxygen Marketplace.
 
