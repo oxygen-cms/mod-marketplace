@@ -67,7 +67,7 @@
 </div>
 @if($paginator !== null)
     <div class="Row">
-            {{ $paginator->render() }}
+            {!! $paginator->render() !!}
     </div>
 @endif
 

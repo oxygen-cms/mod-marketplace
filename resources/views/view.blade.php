@@ -75,7 +75,7 @@
             </ul>
         </div>
         <div class="Cell-twoThirds Cell--last Content">
-            {{ $package->getReadme('<em>No readme found</em>') }}
+            {!! $package->getReadme('<em>No readme found</em>') !!}
         </div>
     </div>
     <div class="Row--visual Row--border">
