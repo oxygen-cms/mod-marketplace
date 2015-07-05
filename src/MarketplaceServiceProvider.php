@@ -97,7 +97,7 @@ class MarketplaceServiceProvider extends ServiceProvider {
 					__DIR__ . '/../resources/packages'
 				),
 				new ProviderRepository(
-					$app['config']
+					$app[PreferencesManager::class]
 				)
 	        );
 	    });

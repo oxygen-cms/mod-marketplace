@@ -4,13 +4,13 @@ namespace OxygenModule\Marketplace\Controller;
 
 use App;
 use Exception;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Marketplace;
 use Input;
 use File;
 use Config;
 use Lang;
 use OxygenModule\Marketplace\SearchQueryFieldSet;
-use Paginator;
 use Redirect;
 use Validator;
 use View;
@@ -56,7 +56,7 @@ class MarketplaceController extends BlueprintController {
         }
 
         if(!empty($results['results'])) {
-            $paginator = Paginator::make($results['results'], $results['total'], count($results['results']));
+            $paginator = new LengthAwarePaginator($results['results'], $results['total'], count($results['results']));
         } else {
             $paginator = null;
         }
@@ -231,7 +231,7 @@ class MarketplaceController extends BlueprintController {
         $page = (int) Input::get('page', 1) - 1;
         $chunk = array_chunk($installed, 30);
         $chunk = isset($chunk[$page]) ? $chunk[$page] : [];
-        $paginator = empty($chunk) ? [] : Paginator::make($chunk, count($installed), 30);
+        $paginator = empty($chunk) ? [] : new LengthAwarePaginator($chunk, count($installed), 30);
         return View::make('oxygen/mod-marketplace::installed', [
             'installed' => $chunk,
             'paginator' => $paginator,

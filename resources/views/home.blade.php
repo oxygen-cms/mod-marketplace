@@ -14,7 +14,7 @@
 ?>
 
 <div class="Block">
-    {{ $header->render()}}
+    {!! $header->render() !!}
 </div>
 
 <div class="Row--layout Row--alignTop">
