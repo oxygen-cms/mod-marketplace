@@ -7,7 +7,7 @@ use OxygenModule\Marketplace\Controller\MarketplaceController;
 
 Blueprint::make('Marketplace', function($blueprint) {
     $blueprint->setController(MarketplaceController::class);
-    $blueprint->setDisplayName('Marketplace', Blueprint::PLURAL);
+    $blueprint->setBothDisplayNames('Marketplace');
     $blueprint->setIcon('cloud');
 
     $blueprint->setToolbarOrders([
