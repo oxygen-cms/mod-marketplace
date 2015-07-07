@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
 use Oxygen\Core\Blueprint\BlueprintManager;
+use Oxygen\Core\Database\AutomaticMigrator;
 use Oxygen\Core\Html\Navigation\Navigation;
 use Oxygen\Preferences\PreferenceNotFoundException;
 use OxygenModule\Marketplace\Events\MigrationListener;
@@ -46,6 +47,7 @@ class MarketplaceServiceProvider extends ServiceProvider {
 
 		$this->app[BlueprintManager::class]->loadDirectory(__DIR__ . '/../resources/blueprints');
 		$this->app[PreferencesManager::class]->loadDirectory(__DIR__ . '/../resources/preferences');
+        $this->app[AutomaticMigrator::class]->loadMigrationsFrom(__DIR__ . '/../migrations');
 
 		$this->addNavigationItems();
 
