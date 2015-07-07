@@ -4,6 +4,7 @@ namespace OxygenModule\Marketplace\Events;
 
 use Composer\Progress\ProgressInterface;
 use Illuminate\Foundation\Application;
+use Oxygen\Core\Database\AutomaticMigrator;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrationListener {
@@ -27,14 +28,14 @@ class MigrationListener {
         $progress->section('Running Migrations');
 
         $migrator = $this->app->make('migrator');
-        $paths = $this->app->make('oxygen.autoMigrator')->getPaths();
+        $paths = $this->app->make(AutomaticMigrator::class)->getPaths();
 
         $progress->total(count($paths));
 
         if(empty($paths)) {
             $output->writeln('No Migrations Found');
         }
-
+        
         foreach($paths as $package => $path) {
             $progress->write('Running migrations for ' . $package);
             $migrator->run($path);
