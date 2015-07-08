@@ -15,8 +15,8 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "oxygen/core": "dev-master",
-        "oxygen/preferences": "dev-master",
+        "oxygen/core": "~0.4.0",
+        "oxygen/preferences": "~0.2.0",
         "illuminate/support": "~5.1.0",
         "michelf/php-markdown": "~1.4",
         "composer/composer": "dev-master",
