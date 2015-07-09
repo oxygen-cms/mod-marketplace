@@ -77,8 +77,8 @@ class ComposerInstallJob {
         putenv('COMPOSER=' . base_path() . '/composer.json');
         putenv('COMPOSER_HOME=' . base_path() . '/.composer');
 
-        $log = $this->config->get('oxygen/mod-marketplace::config.install.log');
-        $progress = $this->config->get('oxygen/mod-marketplace::config.install.progress');
+        $log = $this->config->get('oxygen.mod-marketplace.install.log');
+        $progress = $this->config->get('oxygen.mod-marketplace.install.progress');
         foreach([$log, $progress] as $file) {
             $this->files->delete($file);
             if(!$this->files->exists(dirname($file))) {
@@ -86,7 +86,7 @@ class ComposerInstallJob {
             }
         }
 
-        $input = new ArrayInput($this->config->get('oxygen/mod-marketplace::config.install.command'));
+        $input = new ArrayInput($this->config->get('oxygen.mod-marketplace.install.command'));
         $this->output = new StreamOutput(fopen($log, 'a', false), OutputInterface::VERBOSITY_DEBUG);
         $this->progress = new FileProgress($progress, $this->output);
         $this->progress->section('Beginning Installation');
