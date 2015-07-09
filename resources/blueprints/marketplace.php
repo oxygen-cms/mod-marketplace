@@ -158,7 +158,7 @@ Blueprint::make('Marketplace', function($blueprint) {
         'label' => 'Enable',
         'icon' => 'check',
         'color' => 'white',
-        'shouldRender' => function(ActionToolbarItem $item, array $arguments) {
+        'shouldRenderCallback' => function(ActionToolbarItem $item, array $arguments) {
             return $item->shouldRenderBasic($arguments) && !Marketplace::getProviderRepository()->isCore($arguments['provider']);
         }
     ])->addDynamicCallback(function($item, $arguments) {
