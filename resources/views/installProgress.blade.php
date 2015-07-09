@@ -6,8 +6,7 @@
 
     use Carbon\Carbon;
     use Oxygen\Core\Html\Header\Header;
-    use Oxygen\Core\Html\Toolbar\ButtonToolbarItem;
-    use Oxygen\Core\Html\Toolbar\DisabledToolbarItem;
+    use Oxygen\Core\Html\Form\Form;
 
     $header = Header::fromBlueprint(
         $blueprint,
@@ -24,7 +23,7 @@
 
 <div class="Block">
     <?php
-        $form = new Form($blueprint->getRouteName());
+        $form = new Form($blueprint->getAction('postInstallProgress'));
         $form->setId('progressForm');
 
         echo $form->render();
