@@ -15,7 +15,7 @@ return [
     'added'                     => 'The Package has been Marked as Required',
     'removed'                   => 'The Package has been Marked as No Longer Required',
     'installRequestSent'        => 'The Install Command Has Been Sent',
-    'installRequestAlreadySent' => 'The Install Command Already Has Been Sent',
+    'installRequestAlreadySent' => 'The Install Command Has Already Been Sent',
     'logNotFound'               => 'Install Log Not Found.<br>Has Installation Started Yet?',
     'logCleared'                => 'Install Log Cleared',
 

@@ -12,7 +12,7 @@ Blueprint::make('Marketplace', function($blueprint) {
     $blueprint->setIcon('cloud');
 
     $blueprint->setToolbarOrders([
-        'section' => ['getHome.search', 'postInstall', 'getInstalled'],
+        'section' => ['getHome.search', 'postInstall', 'getInstallProgress', 'getInstalled'],
         'item' => ['getDetails', 'postRequire'],
         'provider' => ['postToggleProvider']
     ]);
@@ -51,20 +51,24 @@ Blueprint::make('Marketplace', function($blueprint) {
         'label' => 'Run Installer',
         'icon' => 'download',
         'color' => 'green',
-        'dialog' => new Dialog(Lang::get('oxygen/mod-marketplace::dialogs.runInstaller'))
-    ])->addDynamicCallback(function($item, $arguments) {
-        $installer = Marketplace::getInstaller();
-        if($installer->isInstalling()) {
-            $item->color = 'white';
-            $item->icon = 'info-circle';
-            $item->label = 'Install Progress';
-            $item->dialog = null;
+        'dialog' => new Dialog(Lang::get('oxygen/mod-marketplace::dialogs.runInstaller')),
+        'shouldRenderCallback' => function(ActionToolbarItem $item, array $arguments) {
+            return $item->shouldRenderBasic($arguments) && !Marketplace::getInstaller()->isInstalling();
         }
-    });
+    ]);
 
     $blueprint->makeAction([
         'name' => 'getInstallProgress',
         'pattern' => 'install/progress'
+    ]);
+    $blueprint->makeToolbarItem([
+        'action' => 'getInstallProgress',
+        'label' => 'Install Progress',
+        'icon' => 'info-circle',
+        'color' => 'white',
+        'shouldRenderCallback' => function(ActionToolbarItem $item, array $arguments) {
+            return $item->shouldRenderBasic($arguments) && Marketplace::getInstaller()->isInstalling();
+        }
     ]);
 
     $blueprint->makeAction([

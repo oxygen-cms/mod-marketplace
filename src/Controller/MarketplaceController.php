@@ -163,15 +163,12 @@ class MarketplaceController extends BlueprintController {
     public function postInstall() {
         $sentRequest = Marketplace::getInstaller()->install();
         $route = $this->blueprint->getRouteName('getInstallProgress');
-
-        if($sentRequest) {
-            return Response::notification(
-                new Notification(Lang::get('oxygen/mod-marketplace::messages.installRequestSent')),
-                ['redirect' => $route]
-            );
-        } else {
-            return Redirect::route($this->blueprint->getRouteName('getInstallProgress'));
-        }
+        $message = $sentRequest ? Lang::get('oxygen/mod-marketplace::messages.installRequestSent') : Lang::get('oxygen/mod-marketplace::messages.installRequestAlreadySent');
+        
+        return Response::notification(
+            new Notification($message),
+            ['redirect' => $route]
+        );
     }
 
     /**
