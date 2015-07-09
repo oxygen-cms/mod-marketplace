@@ -2,6 +2,7 @@
 
 use Oxygen\Core\Form\FieldMetadata;
 use Oxygen\Core\Html\Dialog\Dialog;
+use Oxygen\Core\Html\Toolbar\ActionToolbarItem;
 use Oxygen\Core\Html\Toolbar\Factory\FormToolbarItemFactory;
 use OxygenModule\Marketplace\Controller\MarketplaceController;
 
@@ -156,7 +157,10 @@ Blueprint::make('Marketplace', function($blueprint) {
         'action' => 'postToggleProvider',
         'label' => 'Enable',
         'icon' => 'check',
-        'color' => 'white'
+        'color' => 'white',
+        'shouldRender' => function(ActionToolbarItem $item, array $arguments) {
+            return $item->shouldRenderBasic($arguments) && !Marketplace::getProviderRepository()->isCore($arguments['provider']);
+        }
     ])->addDynamicCallback(function($item, $arguments) {
         $repository = Marketplace::getProviderRepository();
         if($repository->isEnabled($arguments['provider'])) {

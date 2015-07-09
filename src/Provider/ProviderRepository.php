@@ -2,6 +2,7 @@
 
 namespace OxygenModule\Marketplace\Provider;
 
+use Illuminate\Contracts\Config\Repository;
 use Oxygen\Preferences\PreferencesManager;
 
 class ProviderRepository {
@@ -13,13 +14,17 @@ class ProviderRepository {
      */
     protected $preferences;
 
+    protected $config;
+
     /**
      * Constructor.
      *
-     * @param PreferencesManager $repository
+     * @param PreferencesManager                      $repository
+     * @param \Illuminate\Contracts\Config\Repository $config
      */
-    public function __construct(PreferencesManager $repository) {
+    public function __construct(PreferencesManager $repository, Repository $config) {
         $this->preferences = $repository;
+        $this->config = $config;
     }
 
     /**
@@ -30,6 +35,18 @@ class ProviderRepository {
      */
     public function isEnabled($provider) {
         return count(array_filter($this->getProviders(), function($value) use($provider) {
+            return $value === $provider;
+        })) > 0;
+    }
+
+    /**
+     * Detects if the provider is a core service provider and thus can't be disabled.
+     *
+     * @param $provider
+     * @return bool
+     */
+    public function isCore($provider) {
+        return count(array_filter($this->config->get('app.providers'), function($value) use($provider) {
             return $value === $provider;
         })) > 0;
     }
