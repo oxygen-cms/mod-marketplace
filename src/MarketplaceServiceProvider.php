@@ -42,7 +42,7 @@ class MarketplaceServiceProvider extends ServiceProvider {
         $this->publishes([
             __DIR__ . '/../resources/lang' => base_path('resources/lang/vendor/oxygen/mod-marketplace'),
             __DIR__ . '/../resources/views' => base_path('resources/views/vendor/oxygen/mod-marketplace'),
-            __DIR__ . '/../resources/config/config.php' => config_path('oxygen/mod-marketplace.php')
+            __DIR__ . '/../config/config.php' => config_path('oxygen/mod-marketplace.php')
         ]);
 
 		$this->app[BlueprintManager::class]->loadDirectory(__DIR__ . '/../resources/blueprints');
