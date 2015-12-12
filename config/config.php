@@ -18,7 +18,7 @@ return [
             'command' => 'update',
             '--no-interaction' => true,
             '--prefer-dist' => true,
-            '--no-dev' => true,
+            '--no-dev' => env('COMPOSER_UPDATE_NO_DEV', true),
             '--optimize-autoloader' => true
         ]
     ]
