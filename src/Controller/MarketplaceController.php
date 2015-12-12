@@ -197,7 +197,7 @@ class MarketplaceController extends BlueprintController {
             ]);
         }
 
-        if(isset($response['stopPolling']) && $response['stopPolling'] === true) {
+        if(isset($response['finished']) && $response['finished'] === true) {
             Marketplace::getInstaller()->clearInstallProgress();
         }
 
