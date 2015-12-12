@@ -19,7 +19,7 @@
         "oxygen/preferences": "~0.2.0",
         "illuminate/support": "~5.1.0",
         "michelf/php-markdown": "~1.4",
-        "composer/composer": "dev-master",
+        "composer/composer": "dev-progress",
         "guzzlehttp/guzzle": "~5.0"
     },
     "autoload": {
