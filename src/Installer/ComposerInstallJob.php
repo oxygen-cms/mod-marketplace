@@ -93,12 +93,12 @@ class ComposerInstallJob {
         $output = new StreamOutput(fopen($log, 'a', false), OutputInterface::VERBOSITY_DEBUG);
         $progress = new JsonFileFormatter($progressFile, $output, UpdateCommand::getWorkTrackerHeuristics());
         $application = new Application();
-        $application->getIO()->setWorkTracker(new UnboundWorkTracker('Composer', $progress));
+        //$application->getIO()->setWorkTracker(new UnboundWorkTracker('Composer', ));
         $application->setAutoExit(false);
         $application->setCatchExceptions(false);
 
         try {
-            $application->run($input, $output);
+            $application->run($input, $output, new UnboundWorkTracker('Composer', $progress));
 
             $job->delete();
         } catch(Exception $e) {

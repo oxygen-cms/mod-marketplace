@@ -35,7 +35,7 @@
                 <span class="ProgressBar-message-item">Sending Request</span>
             </div>
         </div>
-        <div class="Row--visual TabSwitcher-tabs TabSwitcher-content">
+        <div class="Row--visual TabSwitcher TabSwitcher-tabs TabSwitcher-content">
             <button
                     type="button"
                     class="Accordion-section" data-switch-to-tab="simple" data-default-tab>
@@ -68,22 +68,29 @@
         var Oxygen = Oxygen || {};
         Oxygen.load = Oxygen.load || [];
         Oxygen.load.push(function() {
-            var progressBar = new Oxygen.ProgressBar($("#install-progress"));
-            progressBar.transitionTo(1, 1);
+            var progressBar = document.getElementById("install-progress");
+            function pbFill(amount) {
+                progressBar.querySelector(".ProgressBar-fill").style.width = (amount * 100).toString() + "%";
+            }
+            pbFill(1);
             var times = 0;
             var currentSection = null;
             var currentNotification = null;
-            var form = $("#progressForm");
+            var form = document.getElementById("progressForm");
             var data = {'_token': $('input[name="_token"]').val()};
             var pollInterval = 2000;
             var poll = function() {
                 times++;
-                $.ajax({
-                    type: form.attr("method"),
-                    dataType: "json",
-                    url: form.attr("action"),
-                    data: data,
-                    success: function(response) {
+                window.fetch(
+                    form.getAttribute("action"),
+                    FetchOptions.default()
+                        .body(getFormDataObject(getFormData(form)))
+                        .wantJson()
+                        .method("POST")
+                )
+                    .then(Oxygen.respond.checkStatus)
+                    .then(Oxygen.respond.json)
+                    .then(response => {
                         console.log(response);
 
                         if(response.log) {
@@ -103,17 +110,16 @@
                              });
                              currentSection = response.progress.section.count;
                              } else {*/
-                            progressBar.transitionTo(response.progress * 100, 100);
+                            pbFill(response.progress);
                             //}
 
-                            progressBar.setSectionMessage(response.sectionMessage);
-                            progressBar.setMessage(response.message);
+                            document.querySelector(".ProgressBar-message-section").innerHTML = response.sectionMessage;
+                            document.querySelector(".ProgressBar-message-item").innerHTML = response.message;
                         }
-                        //}
 
                         if(response.notification) {
                             if(!response.notification.unique || currentNotification !== response.notification.unique) {
-                                new Oxygen.Notification(response.notification);
+                                NotificationCenter.present(new Notification(response.notification));
                                 currentNotification = response.notification.unique;
                             }
                         }
@@ -126,9 +132,15 @@
                         } else {
                             setTimeout(poll, pollInterval);
                         }
+                    });
+                    /*.catch(Oxygen.respond.handleAPIError)
+                    type: form.getAttribute("method"),
+                    data: data,
+                    success: function(response) {
+
                     },
                     error: function(response, textStatus, errorThrown) {
-                        Oxygen.Ajax.handleError(response, textStatus, errorThrown);
+                        //Oxygen.Ajax.handleError(response, textStatus, errorThrown);
 
                         if(typeof Pace !== "undefined") {
                             console.log('ignoring');
@@ -138,8 +150,7 @@
                         } else {
                             setTimeout(poll, pollInterval);
                         }
-                    }
-                });
+                    }*/
             };
 
             if(typeof Pace !== 'undefined') {
