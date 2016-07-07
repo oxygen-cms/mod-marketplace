@@ -57,7 +57,7 @@ class MarketplaceServiceProvider extends ServiceProvider {
             foreach($providers as $provider) {
                 $this->app->register($provider);
             }
-        } catch(PreferenceNotFoundException $e) {
+        } catch(\Exception $e) {
 
         }
 	}
