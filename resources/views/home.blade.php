@@ -8,7 +8,7 @@
 
     $header = Header::fromBlueprint(
         $blueprint,
-        Lang::get('oxygen/mod-marketplace::ui.home.title')
+        __('oxygen/mod-marketplace::ui.home.title')
     );
 
 ?>
@@ -36,7 +36,7 @@
                             <img src="{{{ $package->getIcon()}}}">
                         @else
                             <div class="Icon-container">
-                                <span class="Icon Icon--gigantic Icon--light Icon-dropbox"></span>
+                                <span class="fa Icon--gigantic Icon--light fa-dropbox"></span>
                             </div>
                         @endif
                     </div>
@@ -47,8 +47,8 @@
                         {{{ $package->getDescription() }}}
                     </h2>
                     <ul class="Marketplace-item-icons">
-                        <li><span class="Icon Icon--pushRight Icon-download"></span>{{{ $package->downloads['total'] }}}</li>
-                        <li><span class="Icon Icon--pushRight Icon-star"></span>{{{ $package->favers }}}</li>
+                        <li><span class="fa Icon--pushRight fa-download"></span>{{{ $package->downloads['total'] }}}</li>
+                        <li><span class="fa Icon--pushRight fa-star"></span>{{{ $package->favers }}}</li>
                     </ul>
                     <!--<a href="" class="Box Marketplace-item">
                     <div class="Marketplace-item-label">

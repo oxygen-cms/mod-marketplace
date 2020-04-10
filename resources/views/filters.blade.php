@@ -13,10 +13,10 @@ $exclude = isset($exclude) ? $exclude : [];
     <form method="GET" class="Form--singleColumn">
         <?php
             $fields = [
-                new EditableField($fields->getField('q'), app('request'), Input::get('q', '')),
-                new EditableField($fields->getField('scope'), app('request'), Input::get('scope', null)),
-                new EditableField($fields->getField('tags'), app('request'), Input::get('tags', [])),
-                new EditableField($fields->getField('type'), app('request'), Input::get('type', ''))
+                new EditableField($fields->getField('q'), request()->input('q', '')),
+                new EditableField($fields->getField('scope'), request()->input('scope', null)),
+                new EditableField($fields->getField('tags'), request()->input('tags', [])),
+                new EditableField($fields->getField('type'), request()->input('type', ''))
             ];
 
             foreach($fields as $field):

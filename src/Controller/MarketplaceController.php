@@ -225,7 +225,7 @@ class MarketplaceController extends BlueprintController {
      */
     public function getInstalled() {
         $installed = Marketplace::getInstalledPackages($this->getFilters(Input::all()));
-        $page = (int) Input::get('page', 1) - 1;
+        $page = (int) Request::input('page', 1) - 1;
         $chunk = array_chunk($installed, 30);
         $chunk = isset($chunk[$page]) ? $chunk[$page] : [];
         $paginator = empty($chunk) ? [] : new LengthAwarePaginator($chunk, count($installed), 30);
